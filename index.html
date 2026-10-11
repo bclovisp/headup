@@ -18,7 +18,7 @@
 <style>
 :root{
   --bg:#E8F0E1; --ink:#15301F; --muted:#4A6553; --card:#FFFFFF; --line:#CFDCC8;
-  --gold:#FFD23F; --good:#1C8A41; --bad:#CF3A26; --btn:#15301F; --btn-ink:#FFFFFF;
+  --gold:#FFD23F; --good:#1C8A41; --bad:#CF3A26; --btn:#15301F; --btn-ink:#FFFFFF; --soft:#F3F7EF;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -26,531 +26,1293 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0D1C14; --ink:#E4EFDF; --muted:#9AB3A2; --card:#15291D; --line:#26432F;
-    --good:#5FD782; --bad:#FF7B67; --btn:#FFD23F; --btn-ink:#15301F;
+    --good:#5FD782; --bad:#FF7B67; --btn:#FFD23F; --btn-ink:#15301F; --soft:#11241A;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0D1C14; --ink:#E4EFDF; --muted:#9AB3A2; --card:#15291D; --line:#26432F;
-  --good:#5FD782; --bad:#FF7B67; --btn:#FFD23F; --btn-ink:#15301F;
+  --good:#5FD782; --bad:#FF7B67; --btn:#FFD23F; --btn-ink:#15301F; --soft:#11241A;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:"Andika","Trebuchet MS","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.45}
-.app{max-width:520px;margin:0 auto;padding:12px 14px 28px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Andika","Trebuchet MS","Segoe UI",system-ui,sans-serif;font-size:17px;line-height:1.45}
+button{font:inherit;color:inherit}
+[hidden]{display:none !important}
+.app{max-width:520px;margin:0 auto;padding:10px 14px 32px}
 .top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.brand{font-weight:700;font-size:1.15rem;flex:1;margin:0}
+.brand{flex:1;text-align:left;font-weight:700;font-size:1.15rem;background:none;border:0;padding:6px 0;cursor:pointer}
 .stars{font-weight:700;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
 .lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
-.lang button{font:inherit;font-weight:700;border:0;background:transparent;color:var(--muted);padding:6px 13px;min-height:38px;cursor:pointer}
+.lang button{font-weight:700;border:0;background:transparent;color:var(--muted);padding:6px 13px;min-height:38px;cursor:pointer}
 .lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-.lang button:focus-visible,.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.question{font-size:1.32rem;line-height:1.3;margin:6px 2px 12px;font-weight:700}
-.pitch-wrap{border-radius:16px;overflow:hidden;border:3px solid #2A7A46;background:#3A9A5B}
-#pitch{display:block;width:100%;height:auto;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-.hint{text-align:center;color:var(--muted);margin:10px 0 0;font-size:1.05rem}
-.panel{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 16px 18px}
-.panel[hidden],.hint[hidden]{display:none}
-.verdict{font-size:1.45rem;font-weight:700;margin:0 0 4px}
-.verdict.good{color:var(--good)}
-.verdict.bad{color:var(--bad)}
-.detail{margin:0 0 14px}
-.starmsg{margin:-6px 0 14px;font-weight:700}
-.trick{border-left:5px solid var(--gold);padding:2px 0 2px 12px;margin:0 0 14px}
-.trick h2{font-size:1.15rem;margin:0 0 4px}
-.trick p{margin:0}
-.talk{margin:0 0 16px;color:var(--muted)}
-.btn{font:inherit;font-weight:700;font-size:1.12rem;width:100%;min-height:54px;border:0;border-radius:14px;background:var(--btn);color:var(--btn-ink);cursor:pointer}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
-/* pitch layers */
-.zone{cursor:pointer}
-.zone:focus{outline:none}
-.zone:focus-visible .ring{stroke:var(--gold);stroke-width:4}
-.ring{fill:rgba(255,255,255,.14);stroke:#fff;stroke-width:2.5;stroke-dasharray:6 5;animation:pulse 1.8s ease-in-out infinite}
-@keyframes pulse{50%{fill:rgba(255,255,255,.3)}}
-.zone.dim{opacity:.4}
-.zone.chosen .ring{animation:none;fill:rgba(255,255,255,.22);stroke-dasharray:none}
-.zone.best .ring{animation:none;fill:rgba(255,228,92,.28);stroke:#FFE45C;stroke-width:3.5;stroke-dasharray:none}
-.legend{display:flex;justify-content:center;gap:18px;margin:10px 0 0;color:var(--muted);font-size:.98rem}
+/* home */
+.chapter{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 14px 10px;margin:0 0 14px}
+.chapter h2{margin:0;font-size:1.2rem;display:flex;align-items:center;gap:8px}
+.chapter .rule{margin:4px 0 10px;color:var(--muted);font-size:.98rem}
+.lesson{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--soft);border:2px solid transparent;border-radius:14px;padding:10px 12px;margin:0 0 8px;min-height:52px;cursor:pointer}
+.lesson .num{flex:0 0 auto;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--ink);color:var(--bg);font-size:.9rem}
+.lesson .name{flex:1;font-weight:700}
+.lesson .st{font-size:1.15rem}
+.lesson.current{border-color:var(--gold);background:var(--card)}
+.lesson.current .num{background:var(--gold);color:#15301F}
+.lesson.done .num{background:var(--good);color:#fff}
+.lesson:disabled{cursor:default;opacity:.55}
+.parents{margin-top:20px;padding:12px 14px;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
+.parents p{margin:0 0 8px;font-weight:700}
+.linkbtn{background:none;border:0;padding:6px 0;color:var(--muted);text-decoration:underline;cursor:pointer;min-height:36px}
+.parents .linkbtn{display:block}
+
+/* intro + finish */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 18px;text-align:center}
+.card .big{font-size:3.2rem;line-height:1;margin:0 0 8px}
+.card h2{margin:0 0 6px;font-size:1.45rem}
+.card .sub{margin:0 0 12px;color:var(--muted);font-weight:700}
+.card .text{margin:0 0 16px;text-align:left}
+.rulebox{border-left:5px solid var(--gold);background:var(--soft);padding:10px 12px;margin:0 0 16px;text-align:left;font-weight:700;border-radius:0 10px 10px 0}
+.talkbox{background:var(--soft);border-radius:12px;padding:10px 12px;margin:0 0 16px;text-align:left}
+.card .btn{margin-top:4px}
+
+/* play */
+.playbar{display:flex;align-items:center;gap:10px;margin:0 0 4px}
+.ltitle{flex:1;font-weight:700;color:var(--muted);font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.streak{display:flex;gap:6px}
+.streak i{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:var(--card)}
+.streak i.on{background:var(--gold);border-color:#D9A800}
+.question{font-size:1.28rem;line-height:1.3;margin:4px 2px 10px;font-weight:700}
+.pitch-wrap{position:relative;border-radius:16px;overflow:hidden;border:3px solid #2A7A46;background:#3A9A5B}
+#pitch{display:block;width:100%;height:auto;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.flash{position:absolute;inset:auto 0 0 0;padding:0;background:transparent}
+.flash span{display:none}
+.hint.bold{font-weight:700;color:var(--ink)}
+.flash i{display:block;height:6px;margin:0;border-radius:0;background:var(--gold);transform-origin:left;animation:shrink 2.6s linear forwards}
+@keyframes shrink{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.legend{display:flex;justify-content:center;gap:18px;margin:8px 0 10px;color:var(--muted);font-size:.95rem}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
-.reveal{opacity:0;transition:opacity .6s ease}
-.reveal.on{opacity:1}
-#shadows{transition-delay:.15s}
-#passlines{transition-delay:.5s}
-.instant .reveal{transition:none}
-.shadow{transition:opacity .3s ease}
-.shadow.off{opacity:0}
-body[data-state="result"] .opp-hit{cursor:pointer}
-body[data-state="explore"] .opp-hit{pointer-events:none}
-body[data-state="explore"] #pitch{cursor:crosshair}
+.choices{display:grid;gap:8px}
+.choice{display:flex;align-items:center;gap:12px;width:100%;text-align:left;min-height:52px;padding:8px 14px;border-radius:14px;border:2px solid var(--line);background:var(--card);font-weight:700;font-size:1.08rem;cursor:pointer}
+.choice .let{flex:0 0 auto;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#15301F;color:#FFD23F}
+.choice:disabled{cursor:default}
+.choice.picked{border-color:var(--ink)}
+.choice.right{border-color:var(--good);background:color-mix(in srgb, var(--good) 12%, var(--card))}
+.choice.wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--card))}
+.choice .mark{margin-left:auto}
+.hint{text-align:center;color:var(--muted);margin:10px 0 0;font-size:1rem;min-height:1.45em}
 .hint.good{color:var(--good);font-weight:700}
 .hint.bad{color:var(--bad);font-weight:700}
 .count{text-align:center;margin:4px 0 0;font-weight:700}
-.count[hidden],.btn[hidden]{display:none}
-.btn.gold{background:#FFD23F;color:#15301F;margin-bottom:10px}
+.panel{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 16px 18px}
+.verdict{font-size:1.4rem;font-weight:700;margin:0 0 6px}
+.verdict.good{color:var(--good)}
+.verdict.bad,.verdict.meh{color:var(--bad)}
+.detail{margin:0 0 14px;font-size:1.08rem}
+.streakmsg{margin:-4px 0 14px;color:var(--muted);font-weight:700}
+.btn{display:block;font-weight:700;font-size:1.1rem;width:100%;min-height:54px;border:0;border-radius:14px;background:var(--btn);color:var(--btn-ink);cursor:pointer;margin-top:10px}
+.btn.gold{background:#FFD23F;color:#15301F}
 .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
-#done{margin-top:12px}
-@media (prefers-reduced-motion: reduce){
-  .ring{animation:none}
-  .reveal{transition:none}
-}
+
+/* pitch layers */
+.zone{cursor:pointer}
+.ring{fill:rgba(255,255,255,.16);stroke:#fff;stroke-width:2.5;stroke-dasharray:5 4;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{fill:rgba(255,255,255,.32)}}
+.zone.dim{opacity:.35}
+.zone.chosen .ring{animation:none;stroke-dasharray:none;fill:rgba(255,255,255,.25)}
+.zone.best .ring{animation:none;stroke-dasharray:none;stroke:#FFE45C;stroke-width:3.5;fill:rgba(255,228,92,.28)}
+.reveal{opacity:0;transition:opacity .6s ease}
+.reveal.on{opacity:1}
+.d1{transition-delay:.15s}.d2{transition-delay:.45s}
+.instant .reveal{transition:none}
+.shadow{transition:opacity .3s ease}
+.shadow.off{opacity:0}
+.fadeable{transition:opacity .5s ease}
+.hidden-ent{opacity:0}
+body[data-state="result"] .hit{cursor:pointer}
+body[data-state="explore"] .hit{pointer-events:none}
+body[data-state="explore"] #pitch{cursor:crosshair}
+@media (prefers-reduced-motion: reduce){ .ring{animation:none} .reveal,.shadow,.fadeable{transition:none} .flash i{animation-duration:.01s} }
+
 </style>
 </head>
-<body data-state="ask">
+<body data-screen="home" data-state="">
 <div class="app">
   <header class="top">
-    <p class="brand" id="brand">Head Up</p>
-    <span class="stars" id="stars" aria-live="polite">⭐ 0</span>
+    <button type="button" class="brand" id="brand"></button>
+    <span class="stars" id="stars" aria-live="polite"></span>
     <div class="lang" role="group" aria-label="Language">
       <button type="button" data-lang="en" aria-pressed="true">EN</button>
       <button type="button" data-lang="fr" aria-pressed="false">FR</button>
     </div>
   </header>
 
-  <h1 class="question" id="question"></h1>
-  <div class="pitch-wrap"><svg id="pitch" viewBox="0 0 370 302" role="img" aria-labelledby="question"></svg></div>
-  <p class="legend"><span><i style="background:#000"></i><b id="lgUs"></b></span><span><i style="background:#E53935"></i><b id="lgThem"></b></span></p>
-  <p class="hint" id="hint"></p>
-  <p class="count" id="count" hidden></p>
-  <button type="button" class="btn ghost" id="done" hidden></button>
+  <section id="home" class="screen"></section>
+  <section id="intro" class="screen" hidden></section>
 
-  <section class="panel" id="panel" hidden aria-live="polite">
-    <p class="verdict" id="verdict"></p>
-    <p class="detail" id="detail"></p>
-    <p class="starmsg" id="starmsg" hidden></p>
-    <div class="trick">
-      <h2 id="trickTitle"></h2>
-      <p id="trickText"></p>
+  <section id="play" class="screen" hidden>
+    <div class="playbar">
+      <button type="button" class="linkbtn" id="back"></button>
+      <span class="ltitle" id="ltitle"></span>
+      <span class="streak" id="streak" aria-live="polite"></span>
     </div>
-    <p class="talk" id="talk"></p>
-    <button type="button" class="btn gold" id="bonus" hidden></button>
-    <button type="button" class="btn" id="again"></button>
+    <h1 class="question" id="question"></h1>
+    <div class="pitch-wrap">
+      <svg id="pitch" viewBox="0 258 370 296" role="img" aria-labelledby="question"></svg>
+      <div class="flash" id="flash" hidden><span id="flashText"></span><i id="flashBar"></i></div>
+    </div>
+    <p class="legend"><span><i style="background:#000"></i><b id="lgUs"></b></span><span><i style="background:#E53935"></i><b id="lgThem"></b></span></p>
+    <div class="choices" id="choices"></div>
+    <p class="hint" id="hint"></p>
+    <p class="count" id="count" hidden></p>
+    <button type="button" class="btn ghost" id="done" hidden></button>
+    <section class="panel" id="panel" hidden aria-live="polite">
+      <p class="verdict" id="verdict"></p>
+      <p class="detail" id="detail"></p>
+      <p class="streakmsg" id="streakmsg" hidden></p>
+      <button type="button" class="btn ghost" id="showme" hidden></button>
+      <button type="button" class="btn gold" id="bonus" hidden></button>
+      <button type="button" class="btn" id="next"></button>
+    </section>
   </section>
+
+  <section id="finish" class="screen" hidden></section>
 </div>
-
 <script>
-(function(){
-"use strict";
-
-/* ---------- text ---------- */
-var NB = "\u202F"; // narrow no-break space for French punctuation
+/* ===== Head Up text, EN + FR ===== */
+var NB="\u202F";
 var T = {
-  en:{
-    brand:"Head Up",
-    q:"Your keeper has the ball. Where should you go to get the pass?",
-    hint:"Tap A, B or C",
-    us:"Your team", them:"Other team",
-    you:"You", keeper:"Keeper",
-    zones:{A:"Stay", B:"Go wide", C:"Run far"},
-    res:{
-      A:{h:"Blocked!", d:"Their striker is standing between you and the ball. You were hiding in his shadow."},
-      B:{h:"You're open!", d:"Nothing between you and the ball. A short pass, easy to control."},
-      C:{h:"Stolen!", d:"A long pass gives their player time to step in. You ran into his shadow."}
-    },
-    trickT:"The torch trick",
-    trick:"Pretend the ball is a torch. Every player on the other team makes a shadow behind them. If you stand in a shadow, the pass can't reach you. Step into the light!",
-    talk:"Talk about it: in your last match, when were you standing in a shadow?",
-    again:"Try again", replay:"Play again",
-    star:"⭐ You earned a star!",
-    starsLabel:"Stars",
-    hintResult:"Tap a red player to switch his shadow off and on.",
-    bonus:"Bonus: find more bright spots",
-    hintExplore:"Tap anywhere in the light.",
-    done:"I'm done",
-    foundLabel:"Bright spots found: ",
-    ex:{ok:"Bright spot!", shadow:"In a shadow! The pass gets blocked.", marked:"Too close to their player. He gets there first.",
-        far:"Too far. The ball stops short.", crowded:"Too close to your keeper. Give him some space."}
+en:{
+  brand:"Head Up", stars:"Stars", home:"Home", letsgo:"Let's go!", rowRule:"Get 3 right in a row to level up.",
+  look:"Look carefully…", tapHint:"Pick an answer below.", tapSpot:"Tap A, B or C on the pitch.", shadowHint:"Tap a player to switch his shadow off and on.",
+  good:"You got it!", bad:"Not this time", meh:"Not the best choice",
+  streakReset:"Start again: 3 in a row to level up.", showMe:"Show me", next:"Next", again:"Next picture",
+  mastered:"Lesson mastered!", chapterDone:"Chapter complete!", nextLesson:"Next lesson", talk:"Talk about it",
+  allDone:"You've finished every lesson! Play any of them again from the home page.",
+  us:"Your team", them:"Other team", you:"You", keeper:"Keeper",
+  parents:"For parents", unlockAll:"Unlock all lessons", lockAgain:"Lock lessons again", reset:"Reset progress",
+  resetConfirm:"Reset all progress? Stars and lessons will be cleared.",
+  bonus:"Bonus: find more bright spots", hintExplore:"Tap anywhere in the light.", done:"I'm done", foundLabel:"Bright spots found: ",
+  ex:{ok:"Bright spot!", shadow:"In a shadow! The pass gets blocked.", marked:"Too close to their player. He gets there first.",
+      far:"Too far. The ball stops short.", crowded:"Too close to the ball. Give your teammate some space."},
+  lessonWord:"Lesson",
+  ch:{
+   1:{t:"The torch", e:"🔦", rule:"If you can see the ball, the ball can see you.",
+      intro:"Pretend the ball is a torch. Every red player makes a shadow behind him. If you stand in a shadow, the pass can't reach you.",
+      talk:"In your last match, when were you standing in a shadow?"},
+   2:{t:"Three questions", e:"❓", rule:"Can I score? Can I go? Who's in the light?",
+      intro:"When you have the ball, ask three questions, in this order. Can I score? Can I go forward? Who's in the light?",
+      talk:"What do you look at just before the ball reaches you?"},
+   3:{t:"The balloon", e:"🎈", rule:"Our ball: make it big. Their ball: make it small.",
+      intro:"Your team is like a balloon. When we have the ball, blow it up: spread out so there's space. When they have it, let it go small: come close together.",
+      talk:"In your last match, did your team spread out when you had the ball?"},
+   4:{t:"Your shadow", e:"🛡️", rule:"Stand between the ball and your goal.",
+      intro:"When they have the ball, it's their torch. Now you make the shadows: stand where your shadow covers your goal or their free player.",
+      talk:"When you defend, can you always see the ball and your player?"},
+   5:{t:"One goes, one covers", e:"🤝", rule:"Closest goes. Next one covers.",
+      intro:"Defending is teamwork. The closest player goes to the ball. The next one stands behind him, ready to help.",
+      talk:"Who covered you in your last match?"},
+   6:{t:"Switch!", e:"🔄", rule:"Lose it, chase it. Win it, look up.",
+      intro:"Big chances come when the ball changes team. Lose it? Chase it straight away, or run home. Win it? Look up, because they're not ready.",
+      talk:"What did you do the last time you lost the ball?"}
   },
-  fr:{
-    brand:"Lève la tête",
-    q:"Ton gardien a le ballon. Où vas-tu pour recevoir la passe"+NB+"?",
-    hint:"Touche A, B ou C",
-    us:"Ton équipe", them:"L'autre équipe",
-    you:"Toi", keeper:"Gardien",
-    zones:{A:"Rester", B:"S'écarter", C:"Partir loin"},
-    res:{
-      A:{h:"Bloqué"+NB+"!", d:"Leur attaquant est entre toi et le ballon. Tu étais caché dans son ombre."},
-      B:{h:"Tu es libre"+NB+"!", d:"Rien entre toi et le ballon. Une passe courte, facile à contrôler."},
-      C:{h:"Intercepté"+NB+"!", d:"Sur une passe longue, leur joueur a le temps de couper. Tu étais dans son ombre."}
-    },
-    trickT:"Le truc de la lampe",
-    trick:"Imagine que le ballon est une lampe de poche. Chaque joueur de l'autre équipe fait une ombre derrière lui. Si tu es dans l'ombre, la passe ne peut pas t'arriver. Va dans la lumière"+NB+"!",
-    talk:"On en parle"+NB+": pendant ton dernier match, quand étais-tu dans l'ombre"+NB+"?",
-    again:"Réessayer", replay:"Rejouer",
-    star:"⭐ Tu gagnes une étoile"+NB+"!",
-    starsLabel:"Étoiles",
-    hintResult:"Touche un joueur rouge pour éteindre ou rallumer son ombre.",
-    bonus:"Bonus"+NB+": trouve d'autres coins de lumière",
-    hintExplore:"Touche un endroit dans la lumière.",
-    done:"J'ai fini",
-    foundLabel:"Coins de lumière trouvés"+NB+": ",
-    ex:{ok:"Coin de lumière"+NB+"!", shadow:"Dans l'ombre"+NB+"! La passe est bloquée.", marked:"Trop près de leur joueur. Il arrive avant toi.",
-        far:"Trop loin. Le ballon s'arrête avant.", crowded:"Trop près de ton gardien. Laisse-lui de la place."}
+  L:{
+   "1.1":{t:"Get out of the shadow", q:"Your keeper has the ball. Where do you go to get the pass?", o:{stay:"Stay", wide:"Go wide", far:"Run far"},
+          x:"Their striker is between you and the ball, so the pass can't reach you. Two steps to the side and you're in the light."},
+   "1.2":{t:"Can you see the ball?", q:"Your teammate has the ball. Where do you go so he can pass to you?", o:{stay:"Stay", slide:"Slide sideways", close:"Go close"},
+          x:"If you can't see the ball, the ball can't see you. Move until you can see it past every red shirt. Don't go too close: one defender could guard you both."},
+   "1.3":{t:"The best pass", q:"You have the ball. Who do you pass to?", o:{short:"Short pass", longer:"Longer pass", long:"Kick it long"},
+          x:"Pass to the friend in the light, even if he's further away. Nobody can get in the way."},
+   "1.4":{t:"Make a triangle", q:"Your teammate has the ball on the side. Where do you go?", o:{straight:"Straight ahead", diag:"Diagonal", next:"Next to him"},
+          x:"Make a triangle with your teammates. Then the player with the ball has two passes, and one defender can't block both."},
+   "2.1":{t:"Can I score?", q:"You have the ball near their goal. What do you do?", o:{shoot:"Shoot", back:"Pass back", side:"Dribble sideways"},
+          x:"First question: can I score? You're close and the way is clear, so shoot low, away from the keeper."},
+   "2.2":{t:"Can I go?", q:"You have the ball in the middle. What do you do?", o:{back:"Pass back", go:"Run forward", stop:"Stop and wait"},
+          x:"Second question: can I go forward? Empty grass in front of you means run into it with the ball."},
+   "2.3":{t:"Who's in the light?", q:"A red player is in your way. What do you do?", o:{dribble:"Dribble at him", pass:"Pass", shoot:"Shoot from far"},
+          x:"Can't score and can't go forward? Third question: who's in the light? Pass to him and keep moving."},
+   "2.4":{t:"Two against one (1)", q:"Two of you against one defender. What do you do?", o:{dribble:"Keep dribbling", pass:"Pass", back:"Turn back"},
+          x:"The defender came to you, so your teammate is free. When he comes to you, pass."},
+   "2.5":{t:"Two against one (2)", q:"Two of you against one defender. What do you do?", o:{dribble:"Keep dribbling", pass:"Pass", back:"Turn back"},
+          x:"The defender is guarding your teammate, so the road to goal is open. Watch the defender: he tells you what to do."},
+   "2.6":{t:"Look before it arrives", q:"The pass is on its way to you. What do you do?", o:{turn:"Turn", back:"Play it back", stop:"Stop it"},
+          x:"Look over your shoulder before the ball arrives. If someone is right behind you, don't turn: play it back or to the side."},
+   "3.1":{t:"Don't all chase", q:"Your teammate has the ball. Where do you go?", o:{ball:"Run to the ball", space:"Find space", close:"Stay close"},
+          x:"When everyone goes to the ball, nobody is left to pass to. Blow up the balloon: go where your team isn't."},
+   "3.2":{t:"Go wide", q:"We have the ball in the middle. Where do you stand?", o:{inside:"Come inside", wide:"Stay wide", behind:"Go behind"},
+          x:"Wide players make the pitch big. The defenders have to spread out, and gaps open up between them."},
+   "3.3":{t:"Someone stays up", q:"Our defender has the ball near our goal. You're the striker. Where do you go?", o:{back:"Run back", up:"Stay up", ball:"Go to the ball"},
+          x:"If everyone comes back, the balloon gets tiny. Stay up the pitch, in the light, ready for the pass."},
+   "3.4":{t:"Their ball: squeeze in", q:"They have the ball on the other side. Where do you go?", o:{wide:"Stay wide", squeeze:"Squeeze in", ball:"Run to the ball"},
+          x:"When they have the ball, let the balloon go small. Come closer to your team, between the ball and your goal, so there are no gaps."},
+   "4.1":{t:"Get back on the right side", q:"Their player is dribbling at your goal. Where do you go?", o:{stay:"Stay", back:"Run back", side:"Go to the side"},
+          x:"Get between the ball and your goal. Your shadow covers the goal, so he has to get past you."},
+   "4.2":{t:"Steal the pass", q:"Their player wants to pass to their striker. Where do you go?", o:{ball:"Run at the ball", across:"Step across", goal:"Back to goal"},
+          x:"Stand on the line between the ball and their free player. He's in your shadow, so the pass can't reach him."},
+   "4.3":{t:"See the ball and your player", q:"Their player is about to cross the ball. You're marking their striker. Where do you stand?", o:{up:"Up the pitch", goal:"Near the goal", ball:"Near the ball"},
+          x:"Stand between your player and the goal, turned so you can see the ball and him. If you only watch the ball, he sneaks away."},
+   "4.4":{t:"Be a big shadow", q:"You're in goal. Their player is coming at you. Where do you stand?", o:{line:"Stay on the line", out:"Step out", post:"Near the post"},
+          x:"The closer you are to a torch, the bigger your shadow. Step out a little on the line from the ball to the middle of your goal."},
+   "5.1":{t:"Who goes?", q:"They have the ball and you're the closest. What do you do?", o:{go:"Go to the ball", wait:"Wait", other:"Mark another"},
+          x:"The closest player goes to the ball straight away. Everyone else helps by getting into position."},
+   "5.2":{t:"The cover", q:"Your teammate is going to the ball. Where do you go?", o:{too:"Go too", behind:"Stay behind him", goal:"Back to goal"},
+          x:"If he gets past your teammate, you're right there. If you both go, one trick beats you both."},
+   "5.3":{t:"Stay on your feet", q:"Their player runs at you with the ball. What do you do?", o:{slide:"Slide in", wait:"Wait sideways", run:"Run back"},
+          x:"Diving in is a guess, and if you miss, he's gone. Stay on your feet, stand sideways, and pounce when the ball gets away from him."},
+   "5.4":{t:"Send him to the side", q:"Their player is heading for goal. Where do you stand?", o:{line:"Block the line side", middle:"Block the middle", front:"Straight in front"},
+          x:"The middle is the road to goal. Block the road so he has to go to the side, where it's hard to score."},
+   "6.1":{t:"Lost it!", q:"You just lost the ball! What do you do?", o:{hands:"Hands on head", chase:"Chase it", walk:"Walk back"},
+          x:"Lose it, chase it! He's still looking down at the ball, so this is the best moment to win it back."},
+   "6.2":{t:"Too far to chase", q:"They won the ball far away from you. Where do you go?", o:{sprint:"Sprint to the ball", home:"Run home", watch:"Watch"},
+          x:"Too far to chase? Run home, between the ball and your goal, and help the balloon go small."},
+   "6.3":{t:"Won it!", q:"You just won the ball! What do you do?", o:{side:"Dribble sideways", forward:"Pass forward", back:"Pass back"},
+          x:"Win it, look up! Their players are still out of place, so a quick pass forward catches them."},
+   "6.4":{t:"Danger zone", q:"You're in goal and you've caught the ball. Where does it go?", o:{middle:"Roll to the middle", wide:"Throw it wide", far:"Kick it far"},
+          x:"In front of your own goal is the danger zone. Throw it wide, so if something goes wrong, it's far from your goal."}
   }
-};
-
-/* ---------- scenario (pitch units: 10 = 1 metre, our goal at the bottom) ---------- */
-var SC = {
-  id:"shadow-1",
-  ball:[185,256], keeper:[185,272],
-  opps:[[205,212],[128,118]],
-  start:[231,155],
-  zones:{
-    A:{p:[231,155], pill:[262,155,"start"]},
-    B:{p:[290,228], pill:[290,265,"middle"]},
-    C:{p:[110,70],  pill:[140,70,"start"]}
+},
+fr:{
+  brand:"Lève la tête", stars:"Étoiles", home:"Accueil", letsgo:"C'est parti"+NB+"!", rowRule:"3 bonnes réponses d'affilée pour passer au niveau suivant.",
+  look:"Regarde bien…", tapHint:"Choisis une réponse en dessous.", tapSpot:"Touche A, B ou C sur le terrain.", shadowHint:"Touche un joueur pour éteindre ou rallumer son ombre.",
+  good:"Bien joué"+NB+"!", bad:"Pas cette fois", meh:"Pas le meilleur choix",
+  streakReset:"On recommence"+NB+": 3 d'affilée pour passer au niveau suivant.", showMe:"Montre-moi", next:"Suivant", again:"Image suivante",
+  mastered:"Leçon réussie"+NB+"!", chapterDone:"Chapitre terminé"+NB+"!", nextLesson:"Leçon suivante", talk:"On en parle",
+  allDone:"Tu as fini toutes les leçons"+NB+"! Tu peux les rejouer depuis l'accueil.",
+  us:"Ton équipe", them:"L'autre équipe", you:"Toi", keeper:"Gardien",
+  parents:"Pour les parents", unlockAll:"Débloquer toutes les leçons", lockAgain:"Rebloquer les leçons", reset:"Remettre à zéro",
+  resetConfirm:"Tout remettre à zéro"+NB+"? Les étoiles et les leçons seront effacées.",
+  bonus:"Bonus"+NB+": trouve d'autres coins de lumière", hintExplore:"Touche un endroit dans la lumière.", done:"J'ai fini", foundLabel:"Coins de lumière trouvés"+NB+": ",
+  ex:{ok:"Coin de lumière"+NB+"!", shadow:"Dans l'ombre"+NB+"! La passe est bloquée.", marked:"Trop près de leur joueur. Il arrive avant toi.",
+      far:"Trop loin. Le ballon s'arrête avant.", crowded:"Trop près du ballon. Laisse de la place à ton coéquipier."},
+  lessonWord:"Leçon",
+  ch:{
+   1:{t:"La lampe", e:"🔦", rule:"Si tu vois le ballon, le ballon te voit.",
+      intro:"Imagine que le ballon est une lampe de poche. Chaque joueur rouge fait une ombre derrière lui. Si tu es dans l'ombre, la passe ne peut pas t'arriver.",
+      talk:"Pendant ton dernier match, quand étais-tu dans l'ombre"+NB+"?"},
+   2:{t:"Trois questions", e:"❓", rule:"Je peux marquer"+NB+"? Je peux avancer"+NB+"? Qui est dans la lumière"+NB+"?",
+      intro:"Quand tu as le ballon, pose-toi trois questions, dans l'ordre. Je peux marquer"+NB+"? Je peux avancer"+NB+"? Qui est dans la lumière"+NB+"?",
+      talk:"Qu'est-ce que tu regardes juste avant de recevoir le ballon"+NB+"?"},
+   3:{t:"La baudruche", e:"🎈", rule:"Notre ballon"+NB+": on gonfle. Leur ballon"+NB+": on dégonfle.",
+      intro:"Ton équipe, c'est comme une baudruche. Quand on a le ballon, on la gonfle"+NB+": on s'écarte pour avoir de la place. Quand ils l'ont, on la dégonfle"+NB+": on se rapproche.",
+      talk:"Pendant ton dernier match, est-ce que ton équipe s'écartait quand vous aviez le ballon"+NB+"?"},
+   4:{t:"Ton ombre", e:"🛡️", rule:"Place-toi entre le ballon et ton but.",
+      intro:"Quand ils ont le ballon, c'est leur lampe. Maintenant c'est toi qui fais l'ombre"+NB+": place-toi pour que ton ombre cache ton but ou leur joueur libre.",
+      talk:"Quand tu défends, est-ce que tu vois toujours le ballon et ton joueur"+NB+"?"},
+   5:{t:"Un presse, un couvre", e:"🤝", rule:"Le plus près y va. Le suivant couvre.",
+      intro:"Défendre, c'est un travail d'équipe. Le plus proche va au ballon. Le suivant se place derrière lui, prêt à aider.",
+      talk:"Qui t'a couvert pendant ton dernier match"+NB+"?"},
+   6:{t:"On change"+NB+"!", e:"🔄", rule:"Perdu"+NB+": je chasse. Gagné"+NB+": je lève la tête.",
+      intro:"Les grandes occasions arrivent quand le ballon change d'équipe. Tu le perds"+NB+"? Chasse-le tout de suite, ou rentre. Tu le gagnes"+NB+"? Lève la tête, ils ne sont pas prêts.",
+      talk:"Qu'as-tu fait la dernière fois que tu as perdu le ballon"+NB+"?"}
   },
-  best:"B"
+  L:{
+   "1.1":{t:"Sors de l'ombre", q:"Ton gardien a le ballon. Où vas-tu pour recevoir la passe"+NB+"?", o:{stay:"Rester", wide:"S'écarter", far:"Partir loin"},
+          x:"Leur attaquant est entre toi et le ballon, donc la passe ne peut pas t'arriver. Deux pas sur le côté et tu es dans la lumière."},
+   "1.2":{t:"Tu vois le ballon"+NB+"?", q:"Ton coéquipier a le ballon. Où vas-tu pour qu'il te fasse la passe"+NB+"?", o:{stay:"Rester", slide:"Glisser de côté", close:"Aller tout près"},
+          x:"Si tu ne vois pas le ballon, le ballon ne te voit pas. Bouge jusqu'à le voir entre les maillots rouges. Ne va pas trop près"+NB+": un seul défenseur pourrait vous garder tous les deux."},
+   "1.3":{t:"La meilleure passe", q:"Tu as le ballon. À qui fais-tu la passe"+NB+"?", o:{short:"Passe courte", longer:"Passe plus loin", long:"Taper loin"},
+          x:"Fais la passe au coéquipier qui est dans la lumière, même s'il est plus loin. Personne ne peut couper la passe."},
+   "1.4":{t:"Fais un triangle", q:"Ton coéquipier a le ballon sur le côté. Où vas-tu"+NB+"?", o:{straight:"Tout droit", diag:"En diagonale", next:"À côté de lui"},
+          x:"Fais un triangle avec tes coéquipiers. Le joueur qui a le ballon a deux solutions de passe, et un seul défenseur ne peut pas bloquer les deux."},
+   "2.1":{t:"Je peux marquer"+NB+"?", q:"Tu as le ballon près de leur but. Que fais-tu"+NB+"?", o:{shoot:"Tirer", back:"Passe en arrière", side:"Dribbler sur le côté"},
+          x:"Première question"+NB+": je peux marquer"+NB+"? Tu es près et le chemin est libre, alors tire au ras du sol, loin du gardien."},
+   "2.2":{t:"Je peux avancer"+NB+"?", q:"Tu as le ballon au milieu. Que fais-tu"+NB+"?", o:{back:"Passe en arrière", go:"Avancer", stop:"S'arrêter"},
+          x:"Deuxième question"+NB+": je peux avancer"+NB+"? S'il y a de l'herbe libre devant toi, fonce dedans avec le ballon."},
+   "2.3":{t:"Qui est dans la lumière"+NB+"?", q:"Un joueur rouge te bloque. Que fais-tu"+NB+"?", o:{dribble:"Dribbler", pass:"Passer", shoot:"Tirer de loin"},
+          x:"Tu ne peux ni marquer ni avancer"+NB+"? Troisième question"+NB+": qui est dans la lumière"+NB+"? Fais-lui la passe et continue de bouger."},
+   "2.4":{t:"Deux contre un (1)", q:"Vous êtes deux contre un défenseur. Que fais-tu"+NB+"?", o:{dribble:"Continuer à dribbler", pass:"Passer", back:"Revenir"},
+          x:"Le défenseur vient sur toi, donc ton coéquipier est libre. Quand il vient sur toi, passe."},
+   "2.5":{t:"Deux contre un (2)", q:"Vous êtes deux contre un défenseur. Que fais-tu"+NB+"?", o:{dribble:"Continuer à dribbler", pass:"Passer", back:"Revenir"},
+          x:"Le défenseur garde ton coéquipier, donc la route du but est libre. Regarde le défenseur"+NB+": c'est lui qui te dit quoi faire."},
+   "2.6":{t:"Regarde avant de recevoir", q:"La passe arrive vers toi. Que fais-tu"+NB+"?", o:{turn:"Se retourner", back:"Remettre", stop:"Contrôler"},
+          x:"Regarde par-dessus ton épaule avant que le ballon arrive. Si quelqu'un est juste derrière toi, ne te retourne pas"+NB+": remets-le en arrière ou sur le côté."},
+   "3.1":{t:"Pas tous au ballon", q:"Ton coéquipier a le ballon. Où vas-tu"+NB+"?", o:{ball:"Courir au ballon", space:"Trouver de l'espace", close:"Rester près"},
+          x:"Quand tout le monde va au ballon, il n'y a plus personne pour la passe. Gonfle la baudruche"+NB+": va là où ton équipe n'est pas."},
+   "3.2":{t:"Écarte-toi", q:"On a le ballon au milieu. Où te places-tu"+NB+"?", o:{inside:"Rentrer", wide:"Rester large", behind:"Aller derrière"},
+          x:"Les joueurs sur les côtés agrandissent le terrain. Les défenseurs doivent s'écarter, et des trous s'ouvrent entre eux."},
+   "3.3":{t:"Quelqu'un reste devant", q:"Notre défenseur a le ballon près de notre but. Tu es l'attaquant. Où vas-tu"+NB+"?", o:{back:"Revenir aider", up:"Rester devant", ball:"Aller au ballon"},
+          x:"Si tout le monde revient, la baudruche devient toute petite. Reste devant, dans la lumière, prêt pour la passe."},
+   "3.4":{t:"Leur ballon"+NB+": on resserre", q:"Ils ont le ballon de l'autre côté. Où vas-tu"+NB+"?", o:{wide:"Rester large", squeeze:"Resserrer", ball:"Courir au ballon"},
+          x:"Quand ils ont le ballon, on dégonfle la baudruche. Rapproche-toi de ton équipe, entre le ballon et ton but, pour qu'il n'y ait pas de trou."},
+   "4.1":{t:"Reviens du bon côté", q:"Leur joueur dribble vers ton but. Où vas-tu"+NB+"?", o:{stay:"Rester", back:"Revenir", side:"Aller sur le côté"},
+          x:"Place-toi entre le ballon et ton but. Ton ombre cache le but, donc il doit passer par toi."},
+   "4.2":{t:"Vole la passe", q:"Leur joueur veut faire la passe à leur attaquant. Où vas-tu"+NB+"?", o:{ball:"Courir au ballon", across:"Couper la passe", goal:"Retour au but"},
+          x:"Place-toi sur la ligne entre le ballon et leur joueur libre. Il est dans ton ombre, donc la passe ne peut pas lui arriver."},
+   "4.3":{t:"Vois le ballon et ton joueur", q:"Leur joueur va centrer. Tu marques leur attaquant. Où te places-tu"+NB+"?", o:{up:"Plus haut", goal:"Près du but", ball:"Près du ballon"},
+          x:"Place-toi entre ton joueur et le but, tourné pour voir le ballon et lui. Si tu ne regardes que le ballon, il s'échappe."},
+   "4.4":{t:"Fais une grande ombre", q:"Tu es dans les buts. Leur joueur arrive sur toi. Où te places-tu"+NB+"?", o:{line:"Rester sur la ligne", out:"Sortir un peu", post:"Près du poteau"},
+          x:"Plus tu es près de la lampe, plus ton ombre est grande. Avance un peu, sur la ligne entre le ballon et le milieu de ton but."},
+   "5.1":{t:"Qui y va"+NB+"?", q:"Ils ont le ballon et tu es le plus près. Que fais-tu"+NB+"?", o:{go:"Aller au ballon", wait:"Attendre", other:"Marquer un autre"},
+          x:"Le joueur le plus proche va au ballon tout de suite. Les autres aident en se plaçant."},
+   "5.2":{t:"La couverture", q:"Ton coéquipier va au ballon. Où vas-tu"+NB+"?", o:{too:"Y aller aussi", behind:"Rester derrière lui", goal:"Retour au but"},
+          x:"S'il passe ton coéquipier, tu es juste là. Si vous y allez tous les deux, un seul dribble vous élimine."},
+   "5.3":{t:"Reste debout", q:"Leur joueur court vers toi avec le ballon. Que fais-tu"+NB+"?", o:{slide:"Tacler", wait:"Attendre de profil", run:"Reculer au but"},
+          x:"Plonger, c'est jouer à pile ou face, et si tu rates, il est parti. Reste debout, de profil, et attaque quand le ballon s'éloigne de son pied."},
+   "5.4":{t:"Pousse-le sur le côté", q:"Leur joueur fonce vers le but. Où te places-tu"+NB+"?", o:{line:"Bloquer côté ligne", middle:"Bloquer le milieu", front:"Juste devant"},
+          x:"Le milieu, c'est la route du but. Bloque la route pour qu'il aille sur le côté, là où c'est dur de marquer."},
+   "6.1":{t:"Perdu"+NB+"!", q:"Tu viens de perdre le ballon"+NB+"! Que fais-tu"+NB+"?", o:{hands:"Mains sur la tête", chase:"Le poursuivre", walk:"Revenir en marchant"},
+          x:"Perdu, je chasse"+NB+"! Il regarde encore le ballon, c'est le meilleur moment pour le récupérer."},
+   "6.2":{t:"Trop loin pour chasser", q:"Ils ont gagné le ballon loin de toi. Où vas-tu"+NB+"?", o:{sprint:"Sprinter au ballon", home:"Rentrer", watch:"Regarder"},
+          x:"Trop loin pour chasser"+NB+"? Rentre, entre le ballon et ton but, et aide la baudruche à se dégonfler."},
+   "6.3":{t:"Gagné"+NB+"!", q:"Tu viens de gagner le ballon"+NB+"! Que fais-tu"+NB+"?", o:{side:"Dribbler sur le côté", forward:"Passe en avant", back:"Passe en arrière"},
+          x:"Gagné, je lève la tête"+NB+"! Leurs joueurs ne sont pas encore replacés, alors une passe rapide vers l'avant les surprend."},
+   "6.4":{t:"Zone de danger", q:"Tu es dans les buts et tu as attrapé le ballon. Où va le ballon"+NB+"?", o:{middle:"Rouler au milieu", wide:"Lancer sur le côté", far:"Dégager loin"},
+          x:"Devant ton but, c'est la zone de danger. Lance sur le côté"+NB+": si ça tourne mal, c'est loin de ton but."}
+  }
+}
 };
-var R_BODY = 11, R_REACH = 20, R_ZONE = 24;
-var GRASS = "#3A9A5B", US = "#000000", THEM = "#E53935";
-var MAX_PASS = 180, MIN_FROM_KEEPER = 35, MARK_DIST = 32;
+if(typeof module!=="undefined") module.exports={T:T};
 
-/* ---------- storage ---------- */
-var KEY = "headup:v1";
-var store = {lang:"en", stars:0, done:{}};
-try{
-  var raw = localStorage.getItem(KEY);
-  if(raw){ var s = JSON.parse(raw); if(s && typeof s==="object"){ store.lang = s.lang==="fr"?"fr":"en"; store.stars = +s.stars||0; store.done = s.done||{}; } }
-}catch(e){}
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
+/* ===== Head Up core: geometry + deterministic simulation (no DOM) ===== */
+var W = 370, R_BODY = 11, R_REACH = 20, R_GK = 13, R_ZONE = 24;
+var MAX_PASS = 180, MIN_FROM_BALL = 35, MARK_DIST = 32;
 
-/* ---------- geometry ---------- */
 function dist(a,b){ return Math.hypot(b[0]-a[0], b[1]-a[1]); }
 function angDiff(a,b){ var d=a-b; while(d>Math.PI)d-=2*Math.PI; while(d<-Math.PI)d+=2*Math.PI; return Math.abs(d); }
-function blockerFor(ball, target){
-  var best=null, aT=Math.atan2(target[1]-ball[1], target[0]-ball[0]), dT=dist(ball,target);
-  SC.opps.forEach(function(o){
-    var dO=dist(ball,o); if(dO>=dT) return;
-    var aO=Math.atan2(o[1]-ball[1], o[0]-ball[0]);
-    if(angDiff(aT,aO) < Math.asin(Math.min(1,R_REACH/dO))){
+function lerp(a,b,k){ return [a[0]+(b[0]-a[0])*k, a[1]+(b[1]-a[1])*k]; }
+function backOff(from,to,by){ var d=dist(from,to)||1; return [to[0]-(to[0]-from[0])/d*by, to[1]-(to[1]-from[1])/d*by]; }
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+
+/* Build a playable instance from lesson + variant index, optionally mirrored left/right. */
+function instantiate(lesson, vi, mirror){
+  var v = clone(lesson.vars[vi]);
+  function mx(p){ return (mirror && Array.isArray(p) && typeof p[0]==="number") ? [W-p[0], p[1]].concat(p.slice(2)) : p; }
+  var inst = {
+    id: lesson.id, vi: vi, mirror: !!mirror, y0: v.v, ov: lesson.ov || {}, flash: !!lesson.flash, bonus: !!lesson.bonus,
+    m: {p: mx(v.m).slice(0,2), k: !!v.m[2]},
+    us: (v.us||[]).map(function(p){ p=mx(p); return {p:[p[0],p[1]], k:!!p[2]}; }),
+    them: (v.them||[]).map(function(p){ p=mx(p); return {p:[p[0],p[1]], k:!!p[2]}; }),
+    holder: v.h,
+    keys: lesson.opts.slice(), ok: lesson.ok, options: {}
+  };
+  lesson.opts.forEach(function(k){
+    var o = v.o[k];
+    inst.options[k] = {
+      at: mx(o.at),
+      nl: !!o.nl,
+      steps: o.s.map(function(st){ return st.map(function(x){ return mx(x); }); })
+    };
+  });
+  return inst;
+}
+
+/* ----- state helpers ----- */
+function teamOf(ref){ return (ref==="m" || ref[0]==="u") ? "us" : "them"; }
+function ent(st, ref){ if(ref==="m") return st.m; var i=+ref.slice(1); return ref[0]==="u" ? st.us[i] : st.them[i]; }
+function reach(e){ return e.k ? R_GK : R_REACH; }
+function ballOff(ref){ return teamOf(ref)==="us" ? [0,-10] : [0,10]; }
+function ballAt(st, ref){ var e=ent(st,ref), o=ballOff(ref); return [e.p[0]+o[0], e.p[1]+o[1]]; }
+function allRefs(st, team){
+  var r=[];
+  if(team==="us"){ st.us.forEach(function(_,i){ r.push("u"+i); }); r.push("m"); }
+  else st.them.forEach(function(_,i){ r.push("t"+i); });
+  return r;
+}
+function initState(inst){
+  var st = { m: clone(inst.m), us: clone(inst.us), them: clone(inst.them), holder: inst.holder };
+  st.ball = ballAt(st, st.holder);
+  return st;
+}
+
+/* Nearest blocker of a straight ball path from `from` to `to`, among the refs given. */
+function blockerOn(st, from, to, refs, skip){
+  var aT=Math.atan2(to[1]-from[1], to[0]-from[0]), dT=dist(from,to), best=null;
+  refs.forEach(function(ref){
+    if(skip && skip.indexOf(ref)>=0) return;
+    var e=ent(st,ref), dO=dist(from,e.p);
+    if(dO>=dT || dO<1) return;
+    var aO=Math.atan2(e.p[1]-from[1], e.p[0]-from[0]);
+    if(angDiff(aT,aO) < Math.asin(Math.min(1, reach(e)/dO))){
       if(!best || dO<best.d){
-        var ux=(target[0]-ball[0])/dT, uy=(target[1]-ball[1])/dT, t=(o[0]-ball[0])*ux+(o[1]-ball[1])*uy;
-        best={opp:o, d:dO, point:[ball[0]+ux*t, ball[1]+uy*t]};
+        var ux=(to[0]-from[0])/dT, uy=(to[1]-from[1])/dT, t=(e.p[0]-from[0])*ux+(e.p[1]-from[1])*uy;
+        best={ref:ref, d:dO, point:[from[0]+ux*Math.max(t,0), from[1]+uy*Math.max(t,0)]};
       }
     }
   });
   return best;
 }
-function shadowPoly(ball, o){
-  var dx=o[0]-ball[0], dy=o[1]-ball[1], d=Math.hypot(dx,dy), a=Math.atan2(dy,dx);
-  var th=Math.asin(Math.min(1,R_REACH/d)), L=Math.sqrt(Math.max(0,d*d-R_REACH*R_REACH)), F=900;
-  function p(len,ang){ return [ball[0]+len*Math.cos(ang), ball[1]+len*Math.sin(ang)]; }
-  return [p(L,a-th), p(F,a-th), p(F,a+th), p(L,a+th)].map(function(q){return q[0].toFixed(1)+","+q[1].toFixed(1);}).join(" ");
-}
-function backOff(from, to, by){ var d=dist(from,to)||1; return [to[0]-(to[0]-from[0])/d*by, to[1]-(to[1]-from[1])/d*by]; }
+function opp(team){ return team==="us" ? "them" : "us"; }
 
-/* ---------- svg helpers ---------- */
-var NS="http://www.w3.org/2000/svg", svg=document.getElementById("pitch");
+/* Shadow polygon (tangent cone behind an entity, seen from the ball). */
+function shadowPoly(ball, e){
+  var p=e.p, r=reach(e), dx=p[0]-ball[0], dy=p[1]-ball[1], d=Math.hypot(dx,dy), a=Math.atan2(dy,dx);
+  if(d<=r+1) return null;
+  var th=Math.asin(r/d), L=Math.sqrt(d*d-r*r), F=1200;
+  function q(len,ang){ return [ball[0]+len*Math.cos(ang), ball[1]+len*Math.sin(ang)]; }
+  return [q(L,a-th), q(F,a-th), q(F,a+th), q(L,a+th)];
+}
+
+/* ----- simulation: returns {result, events, state} ----- */
+function simulate(inst, key){
+  var st = initState(inst), ev = [], result = null;
+  var steps = inst.options[key].steps;
+  function setHolder(ref){ st.holder=ref; st.ball = ref ? ballAt(st,ref) : st.ball; }
+  steps.forEach(function(s){
+    var op=s[0];
+    if(op==="run" || op==="escape"){
+      var who=s[1], e=ent(st,who), from=e.p.slice(), to=s[2].slice(0,2), wb = st.holder===who;
+      ev.push({t:"move", ref:who, from:from, to:to, withBall:wb});
+      e.p=to; if(wb) st.ball=ballAt(st,who);
+      if(op==="escape"){ ev.push({t:"ring", ref:who, cls:"bad"}); result="bad"; }
+    }
+    else if(op==="pass"){
+      var from=s[1], team=teamOf(from), start=st.ball.slice(), recv = typeof s[2]==="string" ? s[2] : null;
+      var target = recv ? ent(st,recv).p.slice() : s[2].slice(0,2), lofted = s[3] && s[3].lofted;
+      var blk = lofted ? null : blockerOn(st, start, target, allRefs(st, opp(team)));
+      if(blk){
+        var end=backOff(start, ent(st,blk.ref).p, R_BODY+3);
+        ev.push({t:"ball", from:start, to:end});
+        ev.push({t:"ring", ref:blk.ref, cls: team==="us"?"bad":"good"});
+        setHolder(blk.ref); result = team==="us" ? "bad" : "good";
+      } else if(recv){
+        var end2 = ballAt(st, recv);
+        ev.push({t:"ball", from:start, to:end2});
+        setHolder(recv);
+        if(recv==="m" || team==="them") ev.push({t:"ring", ref:recv, cls: team==="us"?"good":"bad"});
+        result = team==="us" ? "good" : "bad";
+      } else {
+        ev.push({t:"ball", from:start, to:target});
+        st.holder=null; st.ball=target.slice();
+      }
+    }
+    else if(op==="shot"){
+      var sh=s[1], team2=teamOf(sh), gy = team2==="us" ? 6 : 544, start2=st.ball.slice();
+      var refs=allRefs(st, opp(team2)), gk=null;
+      refs.forEach(function(r){ if(ent(st,r).k) gk=ent(st,r); });
+      var order = (gk && gk.p[0] < 185) ? [[200,gy],[170,gy],[185,gy]] : [[170,gy],[200,gy],[185,gy]];
+      var scored=null, firstBlk=null;
+      for(var i=0;i<order.length;i++){
+        var b=blockerOn(st, start2, order[i], refs);
+        if(!b){ scored=order[i]; break; }
+        if(!firstBlk) firstBlk=b;
+      }
+      if(scored){
+        ev.push({t:"ball", from:start2, to:scored, fast:true}); ev.push({t:"goal", at:scored, cls: team2==="us"?"good":"bad"});
+        st.holder=null; st.ball=scored.slice(); result = team2==="us" ? "good" : "bad";
+      } else {
+        var end3=backOff(start2, ent(st,firstBlk.ref).p, R_BODY+3);
+        ev.push({t:"ball", from:start2, to:end3, fast:true}); ev.push({t:"ring", ref:firstBlk.ref, cls: team2==="us"?"bad":"good"});
+        setHolder(firstBlk.ref); result = team2==="us" ? "bad" : "good";
+      }
+    }
+    else if(op==="take" || op==="win"){
+      var taker = op==="win" ? "m" : s[1], te=ent(st,taker), from4=te.p.slice();
+      var to4 = backOff(from4, st.ball, R_BODY-2);
+      if(dist(from4, st.ball) > R_BODY+2) ev.push({t:"move", ref:taker, from:from4, to:to4, withBall:false});
+      te.p = to4;
+      var oldBall = st.ball.slice();
+      setHolder(taker);
+      ev.push({t:"ball", from: oldBall, to: st.ball.slice(), quick:true});
+      ev.push({t:"ring", ref:taker, cls: op==="win"?"good":"bad"});
+      result = op==="win" ? "good" : "bad";
+    }
+    else if(op==="good" || op==="bad"){ ev.push({t:"ring", ref:"m", cls:op}); result=op; }
+    else if(op==="meh"){ result="meh"; }
+  });
+  return {result:result, events:ev, state:st};
+}
+
+if(typeof module!=="undefined") module.exports = {instantiate:instantiate, simulate:simulate, blockerOn:blockerOn, initState:initState, allRefs:allRefs, ent:ent, dist:dist};
+
+/* ===== Head Up lessons: 26 lessons x 3 variants. World: 370 x 550, their goal at top (y=6), ours at bottom (y=544). ===== */
+var D=258, A=-4, M=130;
+function rcv(h, at, start, extra){ var s=[]; if(start && (at[0]!==start[0]||at[1]!==start[1])) s.push(["run","m",at]); s.push(["pass",h,"m"]); return s.concat(extra||[]); }
+
+var LESSONS = [
+/* ---------- Chapter 1: the torch ---------- */
+{id:"1.1", ch:1, opts:["stay","wide","far"], ok:"wide", ov:{shadows:"them", lines:true}, bonus:true, vars:[
+ {v:D, us:[[185,524,1]], them:[[205,464],[128,370],[300,330]], m:[231,407], h:"u0",
+  o:{stay:{at:[231,407], s:rcv("u0",[231,407])}, wide:{at:[290,480], s:rcv("u0",[290,480],[231,407])}, far:{at:[110,322], s:rcv("u0",[110,322],[231,407])}}},
+ {v:D, us:[[185,524,1],[300,455]], them:[[150,470],[285,420]], m:[100,420], h:"u0",
+  o:{stay:{at:[100,420], s:rcv("u0",[100,420])}, wide:{at:[55,500], s:rcv("u0",[55,500],[100,420])}, far:{at:[110,330], s:rcv("u0",[110,330],[100,420])}}},
+ {v:D, us:[[185,524,1],[90,480]], them:[[185,458],[100,390]], m:[185,395], h:"u0",
+  o:{stay:{at:[185,395], s:rcv("u0",[185,395])}, wide:{at:[265,470], s:rcv("u0",[265,470],[185,395])}, far:{at:[140,320], s:rcv("u0",[140,320],[185,395])}}}
+]},
+{id:"1.2", ch:1, opts:["stay","slide","close"], ok:"slide", ov:{shadows:"them", lines:true}, bonus:true, vars:[
+ {v:M, us:[[150,360],[100,250]], them:[[200,300],[300,200]], m:[240,260], h:"u0",
+  o:{stay:{at:[240,260], s:rcv("u0",[240,260])}, slide:{at:[290,300], s:rcv("u0",[290,300],[240,260])}, close:{at:[175,335], s:rcv("u0",[175,335],[240,260],[["take","t0"]])}}},
+ {v:M, us:[[240,380],[300,260]], them:[[190,320],[110,220]], m:[150,280], h:"u0",
+  o:{stay:{at:[150,280], s:rcv("u0",[150,280])}, slide:{at:[95,330], s:rcv("u0",[95,330],[150,280])}, close:{at:[215,355], s:rcv("u0",[215,355],[150,280],[["take","t0"]])}}},
+ {v:M, us:[[185,400],[80,350]], them:[[185,330],[90,260]], m:[185,270], h:"u0",
+  o:{stay:{at:[185,270], s:rcv("u0",[185,270])}, slide:{at:[260,300], s:rcv("u0",[260,300],[185,270])}, close:{at:[208,378], s:rcv("u0",[208,378],[185,270],[["take","t0"]])}}}
+]},
+{id:"1.3", ch:1, opts:["short","longer","long"], ok:"longer", ov:{shadows:"them", lines:true}, vars:[
+ {v:M, us:[[245,320],[90,300]], them:[[218,340],[300,250],[180,230]], m:[185,380], h:"m",
+  o:{short:{at:[245,320], s:[["pass","m","u0"]]}, longer:{at:[90,300], s:[["pass","m","u1"]]}, long:{at:[185,200], s:[["pass","m",[185,200]],["take","t2"]]}}},
+ {v:M, us:[[140,350],[300,320]], them:[[170,370],[300,240],[205,250]], m:[200,400], h:"m",
+  o:{short:{at:[140,350], s:[["pass","m","u0"]]}, longer:{at:[300,320], s:[["pass","m","u1"]]}, long:{at:[210,210], s:[["pass","m",[210,210]],["take","t2"]]}}},
+ {v:175, us:[[150,340],[250,370]], them:[[150,375],[260,280],[100,280]], m:[150,420], h:"m",
+  o:{short:{at:[150,340], s:[["pass","m","u0"]]}, longer:{at:[250,370], s:[["pass","m","u1"]]}, long:{at:[120,230], s:[["pass","m",[120,230]],["take","t2"]]}}}
+]},
+{id:"1.4", ch:1, opts:["straight","diag","next"], ok:"diag", ov:{shadows:"them", lines:true, tri:["u0","u1"]}, bonus:true, vars:[
+ {v:M, us:[[45,300],[45,220],[220,330]], them:[[55,200],[75,315],[200,250]], m:[120,320], h:"u0",
+  o:{straight:{at:[45,160], s:rcv("u0",[45,160],[120,320])}, diag:{at:[120,230], s:rcv("u0",[120,230],[120,320])}, next:{at:[70,288], s:rcv("u0",[70,288],[120,320],[["take","t1"]])}}},
+ {v:M, us:[[325,330],[325,250],[160,330]], them:[[318,215],[300,345],[180,260]], m:[240,330], h:"u0",
+  o:{straight:{at:[325,170], s:rcv("u0",[325,170],[240,330])}, diag:{at:[250,260], s:rcv("u0",[250,260],[240,330])}, next:{at:[300,318], s:rcv("u0",[300,318],[240,330],[["take","t1"]])}}},
+ {v:200, us:[[60,420],[60,340],[220,330]], them:[[68,305],[90,435],[220,280]], m:[150,400], h:"u0",
+  o:{straight:{at:[60,270], s:rcv("u0",[60,270],[150,400])}, diag:{at:[140,350], s:rcv("u0",[140,350],[150,400])}, next:{at:[85,408], s:rcv("u0",[85,408],[150,400],[["take","t1"]])}}}
+]},
+
+/* ---------- Chapter 2: three questions ---------- */
+{id:"2.1", ch:2, opts:["shoot","back","side"], ok:"shoot", ov:{shadows:"them", lines:true}, vars:[
+ {v:A, us:[[190,180]], them:[[172,18,1],[90,120],[300,60]], m:[205,95], h:"m",
+  o:{shoot:{at:[188,26], s:[["shot","m"]]}, back:{at:[190,180], nl:1, s:[["pass","m","u0"],["meh"]]}, side:{at:[275,90], nl:1, s:[["run","m",[275,90]],["take","t2"]]}}},
+ {v:A, us:[[150,170]], them:[[195,20,1],[260,140],[60,50]], m:[140,80], h:"m",
+  o:{shoot:{at:[182,26], s:[["shot","m"]]}, back:{at:[150,170], nl:1, s:[["pass","m","u0"],["meh"]]}, side:{at:[70,75], nl:1, s:[["run","m",[70,75]],["take","t2"]]}}},
+ {v:A, us:[[230,190]], them:[[172,18,1],[120,160],[260,100]], m:[180,105], h:"m",
+  o:{shoot:{at:[190,26], s:[["shot","m"]]}, back:{at:[230,190], nl:1, s:[["pass","m","u0"],["meh"]]}, side:{at:[245,100], nl:1, s:[["run","m",[245,100]],["take","t2"]]}}}
+]},
+{id:"2.2", ch:2, opts:["back","go","stop"], ok:"go", ov:{shadows:"them", trail:true}, vars:[
+ {v:M, us:[[130,400]], them:[[300,250],[80,180]], m:[185,330], h:"m",
+  o:{back:{at:[130,400], s:[["pass","m","u0"],["meh"]]}, go:{at:[185,235], s:[["run","m",[185,235]],["good"]]}, stop:{at:[185,330], s:[["take","t0"]]}}},
+ {v:M, us:[[150,400]], them:[[220,300],[250,200]], m:[90,360], h:"m",
+  o:{back:{at:[150,400], s:[["pass","m","u0"],["meh"]]}, go:{at:[90,260], s:[["run","m",[90,260]],["good"]]}, stop:{at:[90,360], s:[["take","t0"]]}}},
+ {v:M, us:[[210,400]], them:[[150,320],[120,220]], m:[270,380], h:"m",
+  o:{back:{at:[210,400], s:[["pass","m","u0"],["meh"]]}, go:{at:[270,280], s:[["run","m",[270,280]],["good"]]}, stop:{at:[270,380], s:[["take","t0"]]}}}
+]},
+{id:"2.3", ch:2, opts:["dribble","pass","shoot"], ok:"pass", ov:{shadows:"them", lines:true}, vars:[
+ {v:A, us:[[280,180]], them:[[185,170],[185,20,1]], m:[185,210], h:"m",
+  o:{dribble:{at:[185,150], nl:1, s:[["run","m",[185,186]],["take","t0"]]}, pass:{at:[280,180], s:[["pass","m","u0"]]}, shoot:{at:[185,26], s:[["shot","m"]]}}},
+ {v:A, us:[[40,170]], them:[[120,190],[185,20,1]], m:[110,230], h:"m",
+  o:{dribble:{at:[125,165], nl:1, s:[["run","m",[116,208]],["take","t0"]]}, pass:{at:[40,170], s:[["pass","m","u0"]]}, shoot:{at:[185,26], s:[["shot","m"]]}}},
+ {v:A, us:[[160,200]], them:[[240,200],[185,20,1]], m:[250,240], h:"m",
+  o:{dribble:{at:[236,172], nl:1, s:[["run","m",[244,218]],["take","t0"]]}, pass:{at:[160,200], s:[["pass","m","u0"]]}, shoot:{at:[188,26], s:[["shot","m"]]}}}
+]},
+{id:"2.4", ch:2, opts:["dribble","pass","back"], ok:"pass", ov:{shadows:"them", lines:true}, arrows:[["t0","m"]], vars:[
+ {v:A, us:[[260,150]], them:[[165,130],[185,20,1]], m:[150,170], h:"m",
+  o:{dribble:{at:[165,105], nl:1, s:[["run","m",[158,148]],["take","t0"]]}, pass:{at:[260,150], s:[["pass","m","u0"]]}, back:{at:[140,250], nl:1, s:[["run","m",[140,250]],["meh"]]}}},
+ {v:A, us:[[110,160]], them:[[215,140],[185,20,1]], m:[230,180], h:"m",
+  o:{dribble:{at:[210,112], nl:1, s:[["run","m",[222,158]],["take","t0"]]}, pass:{at:[110,160], s:[["pass","m","u0"]]}, back:{at:[240,260], nl:1, s:[["run","m",[240,260]],["meh"]]}}},
+ {v:A, us:[[90,170]], them:[[190,160],[185,20,1]], m:[185,200], h:"m",
+  o:{dribble:{at:[192,132], nl:1, s:[["run","m",[188,178]],["take","t0"]]}, pass:{at:[90,170], s:[["pass","m","u0"]]}, back:{at:[180,280], nl:1, s:[["run","m",[180,280]],["meh"]]}}}
+]},
+{id:"2.5", ch:2, opts:["dribble","pass","back"], ok:"dribble", ov:{shadows:"them", lines:true}, arrows:[["t0","u0"]], vars:[
+ {v:A, us:[[260,150]], them:[[225,148],[195,22,1]], m:[150,170], h:"m",
+  o:{dribble:{at:[155,85], nl:1, s:[["run","m",[155,75]],["shot","m"]]}, pass:{at:[260,150], s:[["pass","m","u0"]]}, back:{at:[140,250], nl:1, s:[["run","m",[140,250]],["meh"]]}}},
+ {v:A, us:[[110,160]], them:[[140,160],[175,22,1]], m:[230,180], h:"m",
+  o:{dribble:{at:[215,85], nl:1, s:[["run","m",[215,75]],["shot","m"]]}, pass:{at:[110,160], s:[["pass","m","u0"]]}, back:{at:[240,260], nl:1, s:[["run","m",[240,260]],["meh"]]}}},
+ {v:A, us:[[90,170]], them:[[115,175],[172,22,1]], m:[185,200], h:"m",
+  o:{dribble:{at:[190,90], nl:1, s:[["run","m",[190,80]],["shot","m"]]}, pass:{at:[90,170], s:[["pass","m","u0"]]}, back:{at:[180,280], nl:1, s:[["run","m",[180,280]],["meh"]]}}}
+]},
+{id:"2.6", ch:2, opts:["turn","back","stop"], ok:"back", flash:true, ov:{}, vars:[
+ {v:M, us:[[185,400],[110,350]], them:[[190,272],[300,200]], m:[185,300], h:"u0",
+  o:{turn:{at:[190,236], nl:1, s:[["pass","u0","m"],["run","m",[188,288]],["take","t0"]]}, back:{at:[110,350], s:[["pass","u0","m"],["pass","m","u1"]]}, stop:{at:[185,300], s:[["pass","u0","m"],["take","t0"]]}}},
+ {v:M, us:[[120,420],[230,360]], them:[[150,292],[60,220]], m:[140,320], h:"u0",
+  o:{turn:{at:[152,256], nl:1, s:[["pass","u0","m"],["run","m",[145,308]],["take","t0"]]}, back:{at:[230,360], s:[["pass","u0","m"],["pass","m","u1"]]}, stop:{at:[140,320], s:[["pass","u0","m"],["take","t0"]]}}},
+ {v:M, us:[[250,410],[300,330]], them:[[220,274],[110,230]], m:[230,300], h:"u0",
+  o:{turn:{at:[218,238], nl:1, s:[["pass","u0","m"],["run","m",[226,288]],["take","t0"]]}, back:{at:[300,330], s:[["pass","u0","m"],["pass","m","u1"]]}, stop:{at:[230,300], s:[["pass","u0","m"],["take","t0"]]}}}
+]},
+
+/* ---------- Chapter 3: the balloon ---------- */
+{id:"3.1", ch:3, opts:["ball","space","close"], ok:"space", ov:{hull:true, shadows:"them"}, vars:[
+ {v:M, us:[[185,330],[150,300],[215,305]], them:[[175,290],[210,280],[120,250]], m:[160,350], h:"u0",
+  o:{ball:{at:[170,334], nl:1, s:rcv("u0",[170,334],[160,350],[["take","t0"]])}, space:{at:[300,280], s:rcv("u0",[300,280],[160,350])}, close:{at:[160,350], s:rcv("u0",[160,350],null,[["take","t0"]])}}},
+ {v:M, us:[[150,350],[120,320],[180,325]], them:[[145,305],[110,290],[250,230]], m:[185,365], h:"u0",
+  o:{ball:{at:[165,353], nl:1, s:rcv("u0",[165,353],[185,365],[["take","t0"]])}, space:{at:[55,330], s:rcv("u0",[55,330],[185,365])}, close:{at:[185,365], s:rcv("u0",[185,365],null,[["take","t0"]])}}},
+ {v:M, us:[[230,300],[200,270],[255,265]], them:[[225,255],[270,240],[120,200]], m:[205,320], h:"u0",
+  o:{ball:{at:[216,306], nl:1, s:rcv("u0",[216,306],[205,320],[["take","t0"]])}, space:{at:[100,330], s:rcv("u0",[100,330],[205,320])}, close:{at:[205,320], s:rcv("u0",[205,320],null,[["take","t0"]])}}}
+]},
+{id:"3.2", ch:3, opts:["inside","wide","behind"], ok:"wide", ov:{hull:true, shadows:"them"}, vars:[
+ {v:M, us:[[185,330],[240,290]], them:[[160,280],[215,260],[120,230]], m:[110,300], h:"u0",
+  o:{inside:{at:[165,305], s:rcv("u0",[165,305],[110,300],[["take","t0"]])}, wide:{at:[40,290], s:rcv("u0",[40,290],[110,300])}, behind:{at:[185,395], s:rcv("u0",[185,395],[110,300],[["meh"]])}}},
+ {v:M, us:[[185,350],[130,300]], them:[[215,300],[150,280],[260,250]], m:[260,320], h:"u0",
+  o:{inside:{at:[205,325], s:rcv("u0",[205,325],[260,320],[["take","t0"]])}, wide:{at:[330,320], s:rcv("u0",[330,320],[260,320])}, behind:{at:[185,398], s:rcv("u0",[185,398],[260,320],[["meh"]])}}},
+ {v:M, us:[[180,230],[230,200]], them:[[150,185],[210,170],[100,140]], m:[120,210], h:"u0",
+  o:{inside:{at:[163,207], s:rcv("u0",[163,207],[120,210],[["take","t0"]])}, wide:{at:[40,200], s:rcv("u0",[40,200],[120,210])}, behind:{at:[180,300], s:rcv("u0",[180,300],[120,210],[["meh"]])}}}
+]},
+{id:"3.3", ch:3, opts:["back","up","ball"], ok:"up", ov:{hull:true, shadows:"them", lines:true}, vars:[
+ {v:200, us:[[110,440],[200,400],[260,420]], them:[[150,445],[230,380],[90,370]], m:[220,290], h:"u0",
+  o:{back:{at:[190,385], s:rcv("u0",[190,385],[220,290],[["take","t1"]])}, up:{at:[220,290], s:rcv("u0",[220,290])}, ball:{at:[132,422], s:rcv("u0",[132,422],[220,290],[["take","t0"]])}}},
+ {v:200, us:[[270,440],[180,410],[110,430]], them:[[235,452],[150,380],[290,370]], m:[150,280], h:"u0",
+  o:{back:{at:[175,390], s:rcv("u0",[175,390],[150,280],[["take","t1"]])}, up:{at:[150,280], s:rcv("u0",[150,280])}, ball:{at:[250,425], s:rcv("u0",[250,425],[150,280],[["take","t0"]])}}},
+ {v:200, us:[[185,450],[120,420],[250,420]], them:[[205,470],[200,380],[110,380],[270,370]], m:[85,290], h:"u0",
+  o:{back:{at:[125,395], s:rcv("u0",[125,395],[85,290],[["take","t2"]])}, up:{at:[85,290], s:rcv("u0",[85,290])}, ball:{at:[168,440], s:rcv("u0",[168,440],[85,290],[["take","t0"]])}}}
+]},
+{id:"3.4", ch:3, opts:["wide","squeeze","ball"], ok:"squeeze", ov:{hull:true, shadows:"us"}, vars:[
+ {v:200, us:[[185,530,1],[130,400],[180,330]], them:[[60,330],[290,430],[120,300]], m:[330,350], h:"t0",
+  o:{wide:{at:[330,350], s:[["pass","t0","t1"]]}, squeeze:{at:[210,398], s:[["run","m",[210,398]],["pass","t0","t1"]]}, ball:{at:[110,345], s:[["pass","t0","t1"],["run","m",[110,345]]]}}},
+ {v:200, us:[[185,530,1],[240,410],[190,335]], them:[[310,340],[90,440],[250,300]], m:[40,350], h:"t0",
+  o:{wide:{at:[40,350], s:[["pass","t0","t1"]]}, squeeze:{at:[178,404], s:[["run","m",[178,404]],["pass","t0","t1"]]}, ball:{at:[270,345], s:[["pass","t0","t1"],["run","m",[270,345]]]}}},
+ {v:200, us:[[185,530,1],[140,375],[190,300]], them:[[80,300],[280,400],[150,260]], m:[335,300], h:"t0",
+  o:{wide:{at:[335,300], s:[["pass","t0","t1"]]}, squeeze:{at:[200,364], s:[["run","m",[200,364]],["pass","t0","t1"]]}, ball:{at:[130,305], s:[["pass","t0","t1"],["run","m",[130,305]]]}}}
+]},
+
+/* ---------- Chapter 4: your shadow ---------- */
+{id:"4.1", ch:4, opts:["stay","back","side"], ok:"back", ov:{shadows:"us", string:"ball", goalcover:true}, vars:[
+ {v:D, us:[[185,530,1],[90,380]], them:[[200,400],[300,330]], m:[215,370], h:"t0",
+  o:{stay:{at:[215,370], s:[["run","t0",[195,470]],["shot","t0"]]}, back:{at:[195,457], s:[["run","m",[195,457]],["shot","t0"]]}, side:{at:[300,420], s:[["run","m",[300,420]],["run","t0",[195,470]],["shot","t0"]]}}},
+ {v:D, us:[[185,530,1],[280,390]], them:[[120,380],[60,320]], m:[100,350], h:"t0",
+  o:{stay:{at:[100,350], s:[["run","t0",[140,465]],["shot","t0"]]}, back:{at:[140,437], s:[["run","m",[140,437]],["shot","t0"]]}, side:{at:[40,420], s:[["run","m",[40,420]],["run","t0",[140,465]],["shot","t0"]]}}},
+ {v:D, us:[[185,530,1],[100,400]], them:[[260,420],[310,340]], m:[290,390], h:"t0",
+  o:{stay:{at:[290,390], s:[["run","t0",[225,480]],["shot","t0"]]}, back:{at:[233,470], s:[["run","m",[233,470]],["shot","t0"]]}, side:{at:[340,450], s:[["run","m",[340,450]],["run","t0",[225,480]],["shot","t0"]]}}}
+]},
+{id:"4.2", ch:4, opts:["ball","across","goal"], ok:"across", ov:{shadows:"us"}, vars:[
+ {v:D, us:[[185,530,1],[300,400]], them:[[90,380],[230,470]], m:[160,350], h:"t0",
+  o:{ball:{at:[110,398], s:[["pass","t0","t1"],["run","m",[110,398]]]}, across:{at:[160,428], s:[["run","m",[160,428]],["pass","t0","t1"]]}, goal:{at:[238,515], s:[["run","m",[238,515]],["pass","t0","t1"]]}}},
+ {v:D, us:[[185,530,1],[80,400]], them:[[280,370],[130,470]], m:[210,340], h:"t0",
+  o:{ball:{at:[262,388], s:[["pass","t0","t1"],["run","m",[262,388]]]}, across:{at:[212,420], s:[["run","m",[212,420]],["pass","t0","t1"]]}, goal:{at:[132,515], s:[["run","m",[132,515]],["pass","t0","t1"]]}}},
+ {v:D, us:[[185,530,1],[300,430]], them:[[185,360],[90,460]], m:[250,380], h:"t0",
+  o:{ball:{at:[200,376], s:[["pass","t0","t1"],["run","m",[200,376]]]}, across:{at:[138,415], s:[["run","m",[138,415]],["pass","t0","t1"]]}, goal:{at:[240,515], s:[["run","m",[240,515]],["pass","t0","t1"]]}}}
+]},
+{id:"4.3", ch:4, opts:["up","goal","ball"], ok:"goal", ov:{shadows:"us", string:"t1"}, vars:[
+ {v:D, us:[[200,532,1],[100,420]], them:[[330,440],[185,470]], m:[215,455], h:"t0",
+  o:{up:{at:[185,430], s:[["run","m",[185,430]],["pass","t0","t1"],["shot","t1"]]}, goal:{at:[195,500], s:[["run","m",[195,500]],["pass","t0","t1"],["shot","t1"]]}, ball:{at:[270,410], s:[["run","m",[270,410]],["pass","t0","t1"],["shot","t1"]]}}},
+ {v:D, us:[[172,532,1],[280,410]], them:[[40,430],[190,465]], m:[160,455], h:"t0",
+  o:{up:{at:[195,425], s:[["run","m",[195,425]],["pass","t0","t1"],["shot","t1"]]}, goal:{at:[180,497], s:[["run","m",[180,497]],["pass","t0","t1"],["shot","t1"]]}, ball:{at:[110,400], s:[["run","m",[110,400]],["pass","t0","t1"],["shot","t1"]]}}},
+ {v:D, us:[[198,532,1],[100,430]], them:[[340,510],[180,488]], m:[205,470], h:"t0",
+  o:{up:{at:[175,455], s:[["run","m",[175,455]],["pass","t0","t1"],["shot","t1"]]}, goal:{at:[192,515], s:[["run","m",[192,515]],["pass","t0","t1"],["shot","t1"]]}, ball:{at:[280,470], s:[["run","m",[280,470]],["pass","t0","t1"],["shot","t1"]]}}}
+]},
+{id:"4.4", ch:4, opts:["line","out","post"], ok:"out", ov:{shadows:"us", string:"ball", goalcover:true}, vars:[
+ {v:D, us:[[110,420]], them:[[290,440]], m:[185,536,1], h:"t0",
+  o:{line:{at:[185,536], s:[["shot","t0"]]}, out:{at:[216,516], s:[["run","m",[216,516]],["shot","t0"]]}, post:{at:[202,538], s:[["run","m",[202,538]],["shot","t0"]]}}},
+ {v:D, us:[[260,420]], them:[[80,440]], m:[185,536,1], h:"t0",
+  o:{line:{at:[185,536], s:[["shot","t0"]]}, out:{at:[154,519], s:[["run","m",[154,519]],["shot","t0"]]}, post:{at:[168,538], s:[["run","m",[168,538]],["shot","t0"]]}}},
+ {v:D, us:[[90,430]], them:[[185,440]], m:[185,536,1], h:"t0",
+  o:{line:{at:[185,536], s:[["shot","t0"]]}, out:{at:[185,505], s:[["run","m",[185,505]],["shot","t0"]]}, post:{at:[168,538], s:[["run","m",[168,538]],["shot","t0"]]}}}
+]},
+
+/* ---------- Chapter 5: one goes, one covers ---------- */
+{id:"5.1", ch:5, opts:["go","wait","other"], ok:"go", ov:{dist:true}, vars:[
+ {v:M, us:[[100,380]], them:[[180,300],[90,280]], m:[210,350], h:"t0",
+  o:{go:{at:[182,332], s:[["run","m",[182,332]],["win"]]}, wait:{at:[210,350], s:[["escape","t0",[195,395]]]}, other:{at:[100,300], s:[["run","m",[100,300]],["escape","t0",[200,395]]]}}},
+ {v:M, us:[[260,390]], them:[[100,320],[250,300]], m:[140,360], h:"t0",
+  o:{go:{at:[104,350], s:[["run","m",[104,350]],["win"]]}, wait:{at:[140,360], s:[["escape","t0",[110,410]]]}, other:{at:[240,320], s:[["run","m",[240,320]],["escape","t0",[110,410]]]}}},
+ {v:M, us:[[120,400]], them:[[260,330],[150,290]], m:[230,375], h:"t0",
+  o:{go:{at:[255,360], s:[["run","m",[255,360]],["win"]]}, wait:{at:[230,375], s:[["escape","t0",[245,415]]]}, other:{at:[160,310], s:[["run","m",[160,310]],["escape","t0",[245,415]]]}}}
+]},
+{id:"5.2", ch:5, opts:["too","behind","goal"], ok:"behind", ov:{shadows:"us", string:"ball"}, vars:[
+ {v:D, us:[[185,530,1],[190,395]], them:[[185,370],[90,390]], m:[250,380], h:"t0",
+  o:{too:{at:[200,385], s:[["run","m",[200,385]],["pass","t0","t1"]]}, behind:{at:[195,432], s:[["run","m",[195,432]],["run","t0",[172,418]],["win"]]}, goal:{at:[222,520], s:[["run","m",[222,520]],["run","t0",[175,440]],["shot","t0"]]}}},
+ {v:D, us:[[185,530,1],[105,392]], them:[[110,360],[260,400]], m:[60,400], h:"t0",
+  o:{too:{at:[100,378], s:[["run","m",[100,378]],["pass","t0","t1"]]}, behind:{at:[130,428], s:[["run","m",[130,428]],["run","t0",[125,415]],["win"]]}, goal:{at:[240,515], s:[["run","m",[240,515]],["run","t0",[130,440]],["shot","t0"]]}}},
+ {v:D, us:[[185,530,1],[276,414]], them:[[270,385],[110,420]], m:[190,400], h:"t0",
+  o:{too:{at:[285,395], s:[["run","m",[285,395]],["pass","t0","t1"]]}, behind:{at:[255,452], s:[["run","m",[255,452]],["run","t0",[258,438]],["win"]]}, goal:{at:[150,500], s:[["run","m",[150,500]],["run","t0",[250,445]],["shot","t0"]]}}}
+]},
+{id:"5.3", ch:5, opts:["slide","wait","run"], ok:"wait", ov:{}, arrows:[["t0","m"]], vars:[
+ {v:D, us:[[185,530,1]], them:[[185,360]], m:[185,420], h:"t0",
+  o:{slide:{at:[185,386], s:[["run","m",[185,388]],["escape","t0",[208,455]]]}, wait:{at:[185,432], s:[["run","m",[185,432]],["run","t0",[185,405]],["win"]]}, run:{at:[185,500], s:[["run","m",[185,500]],["escape","t0",[190,465]]]}}},
+ {v:D, us:[[185,530,1]], them:[[120,370]], m:[140,425], h:"t0",
+  o:{slide:{at:[124,390], s:[["run","m",[124,390]],["escape","t0",[152,458]]]}, wait:{at:[142,437], s:[["run","m",[142,437]],["run","t0",[138,410]],["win"]]}, run:{at:[175,505], s:[["run","m",[175,505]],["escape","t0",[150,470]]]}}},
+ {v:D, us:[[185,530,1]], them:[[260,380]], m:[240,430], h:"t0",
+  o:{slide:{at:[256,398], s:[["run","m",[256,398]],["escape","t0",[232,468]]]}, wait:{at:[238,442], s:[["run","m",[238,442]],["run","t0",[250,416]],["win"]]}, run:{at:[200,505], s:[["run","m",[200,505]],["escape","t0",[230,470]]]}}}
+]},
+{id:"5.4", ch:5, opts:["line","middle","front"], ok:"middle", ov:{road:true}, arrows:[["t0",[185,544]]], vars:[
+ {v:D, us:[[200,532,1]], them:[[230,390]], m:[230,445], h:"t0",
+  o:{line:{at:[255,425], s:[["run","m",[255,425]],["run","t0",[195,455]],["shot","t0"]]}, middle:{at:[208,425], s:[["run","m",[208,425]],["run","t0",[300,470]],["run","m",[286,466]],["win"]]}, front:{at:[230,422], s:[["run","m",[230,422]],["run","t0",[190,455]],["shot","t0"]]}}},
+ {v:D, us:[[170,532,1]], them:[[140,390]], m:[140,445], h:"t0",
+  o:{line:{at:[115,425], s:[["run","m",[115,425]],["run","t0",[175,455]],["shot","t0"]]}, middle:{at:[162,425], s:[["run","m",[162,425]],["run","t0",[60,470]],["run","m",[74,466]],["win"]]}, front:{at:[140,422], s:[["run","m",[140,422]],["run","t0",[180,455]],["shot","t0"]]}}},
+ {v:D, us:[[200,532,1]], them:[[205,380]], m:[205,440], h:"t0",
+  o:{line:{at:[228,418], s:[["run","m",[228,418]],["run","t0",[180,450]],["shot","t0"]]}, middle:{at:[183,418], s:[["run","m",[183,418]],["run","t0",[300,450]],["run","m",[287,446]],["win"]]}, front:{at:[205,415], s:[["run","m",[205,415]],["run","t0",[178,448]],["shot","t0"]]}}}
+]},
+
+/* ---------- Chapter 6: switch! ---------- */
+{id:"6.1", ch:6, opts:["hands","chase","walk"], ok:"chase", ov:{}, vars:[
+ {v:M, us:[[100,380]], them:[[215,295],[300,220]], m:[185,300], h:"t0",
+  o:{hands:{at:[185,300], s:[["escape","t0",[205,385]]]}, chase:{at:[200,316], s:[["run","t0",[200,320]],["win"]]}, walk:{at:[185,395], s:[["run","m",[185,395]],["escape","t0",[232,372]]]}}},
+ {v:M, us:[[260,400]], them:[[140,325],[60,230]], m:[110,330], h:"t0",
+  o:{hands:{at:[110,330], s:[["escape","t0",[130,410]]]}, chase:{at:[126,346], s:[["run","t0",[125,348]],["win"]]}, walk:{at:[110,410], s:[["run","m",[110,410]],["escape","t0",[152,398]]]}}},
+ {v:M, us:[[120,380]], them:[[230,275],[150,200]], m:[260,280], h:"t0",
+  o:{hands:{at:[260,280], s:[["escape","t0",[240,362]]]}, chase:{at:[246,300], s:[["run","t0",[245,302]],["win"]]}, walk:{at:[260,370], s:[["run","m",[260,370]],["escape","t0",[210,352]]]}}}
+]},
+{id:"6.2", ch:6, opts:["sprint","home","watch"], ok:"home", ov:{shadows:"us"}, vars:[
+ {v:200, us:[[185,530,1],[120,420]], them:[[80,320],[220,410],[150,250]], m:[250,250], h:"t0",
+  o:{sprint:{at:[112,322], s:[["run","m",[150,300]],["pass","t0","t1"]]}, home:{at:[164,378], s:[["run","m",[164,378]],["pass","t0","t1"]]}, watch:{at:[250,250], s:[["pass","t0","t1"]]}}},
+ {v:200, us:[[185,530,1],[250,420]], them:[[290,330],[150,420],[220,250]], m:[110,250], h:"t0",
+  o:{sprint:{at:[262,325], s:[["run","m",[220,300]],["pass","t0","t1"]]}, home:{at:[206,388], s:[["run","m",[206,388]],["pass","t0","t1"]]}, watch:{at:[110,250], s:[["pass","t0","t1"]]}}},
+ {v:190, us:[[185,530,1],[100,430]], them:[[100,280],[230,380],[180,220]], m:[280,225], h:"t0",
+  o:{sprint:{at:[132,282], s:[["run","m",[180,250]],["pass","t0","t1"]]}, home:{at:[178,344], s:[["run","m",[178,344]],["pass","t0","t1"]]}, watch:{at:[280,225], s:[["pass","t0","t1"]]}}}
+]},
+{id:"6.3", ch:6, opts:["side","forward","back"], ok:"forward", ov:{shadows:"them", lines:true}, arrows:[["t0",[185,544]],["t1",[185,544]]], vars:[
+ {v:M, us:[[250,200],[200,400]], them:[[160,300],[130,240],[300,380]], m:[185,320], h:"m",
+  o:{side:{at:[110,322], nl:1, s:[["run","m",[110,322]],["take","t0"]]}, forward:{at:[250,200], s:[["pass","m","u0"]]}, back:{at:[200,400], nl:1, s:[["pass","m","u1"],["meh"]]}}},
+ {v:M, us:[[230,230],[90,400]], them:[[100,320],[60,260],[230,330]], m:[120,350], h:"m",
+  o:{side:{at:[200,352], nl:1, s:[["run","m",[200,352]],["take","t2"]]}, forward:{at:[230,230], s:[["pass","m","u0"]]}, back:{at:[90,400], nl:1, s:[["pass","m","u1"],["meh"]]}}},
+ {v:M, us:[[150,210],[290,400]], them:[[285,310],[300,230],[300,370]], m:[260,330], h:"m",
+  o:{side:{at:[332,332], nl:1, s:[["run","m",[332,332]],["take","t0"]]}, forward:{at:[150,210], s:[["pass","m","u0"]]}, back:{at:[290,400], nl:1, s:[["pass","m","u1"],["meh"]]}}}
+]},
+{id:"6.4", ch:6, opts:["middle","wide","far"], ok:"wide", ov:{shadows:"them", lines:true, danger:true}, vars:[
+ {v:D, us:[[185,455],[300,480]], them:[[188,478],[250,440],[180,300]], m:[185,515,1], h:"m",
+  o:{middle:{at:[185,455], s:[["pass","m","u0"]]}, wide:{at:[300,480], s:[["pass","m","u1"]]}, far:{at:[185,322], nl:1, s:[["pass","m",[185,322],{lofted:1}],["take","t2"]]}}},
+ {v:D, us:[[180,455],[60,480]], them:[[176,478],[100,420],[190,300]], m:[185,515,1], h:"m",
+  o:{middle:{at:[180,455], s:[["pass","m","u0"]]}, wide:{at:[60,480], s:[["pass","m","u1"]]}, far:{at:[190,322], nl:1, s:[["pass","m",[190,322],{lofted:1}],["take","t2"]]}}},
+ {v:D, us:[[195,458],[70,470]], them:[[198,480],[250,430],[175,300]], m:[185,515,1], h:"m",
+  o:{middle:{at:[195,458], s:[["pass","m","u0"]]}, wide:{at:[70,470], s:[["pass","m","u1"]]}, far:{at:[178,322], nl:1, s:[["pass","m",[178,322],{lofted:1}],["take","t2"]]}}}
+]}
+];
+if(typeof module!=="undefined") module.exports = {LESSONS:LESSONS};
+
+/* Answer style: "spot" = tap A/B/C on the pitch (where to go / where the ball goes); "buttons" = answer under the pitch (what to do, or positions too close to tap). */
+var BUTTON_LESSONS={"2.1":1,"2.2":1,"2.3":1,"2.4":1,"2.5":1,"2.6":1,"3.1":1,"4.4":1,"5.1":1,"5.3":1,"5.4":1,"6.1":1,"6.3":1};
+LESSONS.forEach(function(L){ L.mode = BUTTON_LESSONS[L.id] ? "buttons" : "spot"; });
+
+/* ===== Head Up UI ===== */
+(function(){
+"use strict";
+var $=function(id){ return document.getElementById(id); };
+var NS="http://www.w3.org/2000/svg", svg=$("pitch");
 function el(tag, attrs, parent){ var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k, attrs[k]); if(parent) parent.appendChild(e); return e; }
+function h(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
 var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 function ease(k){ return k<.5 ? 2*k*k : 1-Math.pow(-2*k+2,2)/2; }
-function tween(ms, fn){
-  return new Promise(function(res){
-    if(reduce||!ms){ fn(1); res(); return; }
-    var t0=null;
-    function f(t){ if(t0===null)t0=t; var k=Math.min(1,(t-t0)/ms); fn(ease(k)); if(k<1) requestAnimationFrame(f); else res(); }
-    requestAnimationFrame(f);
+function tween(ms, fn){ return new Promise(function(res){ if(reduce||!ms){ fn(1); res(); return; } var t0=null; function f(t){ if(t0===null)t0=t; var k=Math.min(1,(t-t0)/ms); fn(ease(k)); if(k<1) requestAnimationFrame(f); else res(); } requestAnimationFrame(f); }); }
+function wait(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); }
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+/* ---------- storage ---------- */
+var KEY="headup:v2", store={lang:"en", mastered:{}, unlockAll:false};
+try{ var raw=localStorage.getItem(KEY); if(raw){ var s=JSON.parse(raw); if(s&&typeof s==="object"){ store.lang=s.lang==="fr"?"fr":"en"; store.mastered=s.mastered||{}; store.unlockAll=!!s.unlockAll; } } }catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} }
+function t(){ return T[store.lang]; }
+function masteredCount(){ return LESSONS.filter(function(L){ return store.mastered[L.id]; }).length; }
+function firstOpen(){ for(var i=0;i<LESSONS.length;i++) if(!store.mastered[LESSONS[i].id]) return i; return LESSONS.length; }
+function playable(i){ return store.unlockAll || i<=firstOpen(); }
+
+/* ---------- screens ---------- */
+var screen="home";
+function show(name){
+  screen=name; document.body.dataset.screen=name;
+  ["home","intro","play","finish"].forEach(function(s){ $(s).hidden = s!==name; });
+  window.scrollTo(0,0);
+}
+function header(){
+  document.documentElement.lang=store.lang; document.title=t().brand;
+  $("brand").textContent=t().brand;
+  $("stars").textContent="⭐ "+masteredCount()+"/"+LESSONS.length;
+  $("stars").setAttribute("aria-label", t().stars+": "+masteredCount());
+  document.querySelectorAll(".lang button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.lang===store.lang)); });
+}
+
+function renderHome(){
+  header();
+  var root=$("home"); root.innerHTML="";
+  var open=firstOpen();
+  [1,2,3,4,5,6].forEach(function(c){
+    var ct=t().ch[c], box=h("div","chapter");
+    var h2=h("h2"); h2.appendChild(h("span",null,ct.e)); h2.appendChild(h("span",null,c+". "+ct.t)); box.appendChild(h2);
+    box.appendChild(h("p","rule",ct.rule));
+    LESSONS.forEach(function(L,i){
+      if(L.ch!==c) return;
+      var done=!!store.mastered[L.id], cur = i===open, can=playable(i);
+      var b=h("button","lesson"+(done?" done":"")+(cur?" current":"")); b.type="button"; b.disabled=!can; b.dataset.lesson=L.id;
+      b.appendChild(h("span","num",L.id)); b.appendChild(h("span","name",t().L[L.id].t));
+      b.appendChild(h("span","st", done?"✅":(cur?"▶️":(can?"":"🔒"))));
+      b.addEventListener("click",function(){ startLesson(i); });
+      box.appendChild(b);
+    });
+    root.appendChild(box);
+  });
+  var p=h("div","parents"); p.appendChild(h("p",null,t().parents));
+  var u=h("button","linkbtn", store.unlockAll?t().lockAgain:t().unlockAll); u.type="button"; u.id="unlockAll";
+  u.addEventListener("click",function(){ store.unlockAll=!store.unlockAll; save(); renderHome(); });
+  var r=h("button","linkbtn",t().reset); r.type="button"; r.id="resetAll";
+  r.addEventListener("click",function(){ if(window.confirm(t().resetConfirm)){ store.mastered={}; store.unlockAll=false; save(); renderHome(); } });
+  p.appendChild(u); p.appendChild(r); root.appendChild(p);
+}
+
+/* ---------- lesson flow ---------- */
+var LI=-1, lesson=null, queue=[], qpos=0, streak=0, inst=null, letters={}, phase="", choiceKey=null, busy=false, showingKey=null;
+function startLesson(i){
+  LI=i; lesson=LESSONS[i]; streak=0; queue=shuffle([0,1,2]); qpos=0;
+  renderIntro(); show("intro");
+}
+function renderIntro(){
+  header();
+  var root=$("intro"); root.innerHTML="";
+  var ct=t().ch[lesson.ch], lt=t().L[lesson.id], firstOfChapter = LESSONS.findIndex(function(L){ return L.ch===lesson.ch; })===LI;
+  var c=h("div","card");
+  c.appendChild(h("p","big",ct.e));
+  c.appendChild(h("p","sub", t().lessonWord+" "+lesson.id));
+  c.appendChild(h("h2",null,lt.t));
+  if(firstOfChapter) c.appendChild(h("p","text",ct.intro));
+  c.appendChild(h("div","rulebox",ct.rule));
+  c.appendChild(h("p","text",t().rowRule));
+  var b=h("button","btn",t().letsgo); b.type="button"; b.id="go"; b.addEventListener("click",function(){ show("play"); nextVariant(); });
+  c.appendChild(b);
+  var hm=h("button","btn ghost",t().home); hm.type="button"; hm.addEventListener("click",goHome); c.appendChild(hm);
+  root.appendChild(c);
+}
+function goHome(){ if(busy) return; phase=""; document.body.dataset.state=""; renderHome(); show("home"); }
+
+function nextVariant(){
+  if(qpos>0 && qpos%3===0){ var last=queue[2]; do{ queue=shuffle([0,1,2]); }while(queue[0]===last); }
+  var vi=queue[qpos%3]; qpos++;
+  inst=instantiate(lesson, vi, Math.random()<0.5);
+  var ls=shuffle(["A","B","C"]); letters={}; lesson.opts.forEach(function(k,j){ letters[k]=ls[j]; });
+  choiceKey=null; showingKey=null; found=[];
+  phase="ask"; document.body.dataset.state="ask";
+  renderPlay();
+  if(inst.flash) runFlash();
+}
+
+function renderPlay(){
+  header();
+  var lt=t().L[lesson.id];
+  $("back").textContent="‹ "+t().home;
+  $("ltitle").textContent=lesson.id+"  "+lt.t;
+  var sk=$("streak"); sk.innerHTML=""; for(var i=0;i<3;i++){ var d=h("i", i<streak?"on":""); sk.appendChild(d); }
+  sk.setAttribute("aria-label", streak+"/3");
+  $("question").textContent = phase==="explore" ? t().bonus : lt.q;
+  $("lgUs").textContent=t().us; $("lgThem").textContent=t().them;
+  $("flashText").textContent=t().look;
+  renderChoices();
+  drawPitch();
+  if(phase==="result") drawFinal(showingKey||choiceKey);
+  if(phase==="explore") drawExplore();
+  hintForPhase(); updateCount();
+  $("done").textContent=t().done;
+  if(phase==="result") fillPanel();
+}
+function renderChoices(){
+  var box=$("choices"); box.innerHTML=""; box.hidden = phase==="explore" || lesson.mode==="spot";
+  var lt=t().L[lesson.id];
+  lesson.opts.slice().sort(function(a,b){ return letters[a]<letters[b]?-1:1; }).forEach(function(k){
+    var b=h("button","choice"); b.type="button"; b.dataset.key=k;
+    b.appendChild(h("span","let",letters[k])); b.appendChild(h("span","lab",lt.o[k]));
+    var mk=h("span","mark",""); b.appendChild(mk);
+    if(phase!=="ask" || flashing) b.disabled=true;
+    if(phase==="result"){
+      if(k===choiceKey) b.classList.add("picked");
+      if(k===lesson.ok){ b.classList.add("right"); mk.textContent="✅"; }
+      else if(k===choiceKey){ b.classList.add("wrong"); mk.textContent="✋"; }
+    }
+    b.addEventListener("click",function(){ choose(k); });
+    box.appendChild(b);
   });
 }
-function wait(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); }
+function hintForPhase(){
+  var hi=$("hint"); hi.className="hint";
+  if(phase==="ask" && flashing){ hi.textContent = "👀 "+t().look; hi.className="hint bold"; }
+  else if(phase==="ask") hi.textContent = (lesson.mode==="spot" ? t().tapSpot : t().tapHint);
+  else if(phase==="result") hi.textContent = inst.ov.shadows ? t().shadowHint : "";
+  else if(phase==="explore") hi.textContent = t().hintExplore;
+  else hi.textContent="";
+}
+function setHint(text,cls){ var hi=$("hint"); hi.textContent=text; hi.className="hint"+(cls?" "+cls:""); }
+function updateCount(){ var c=$("count"); c.hidden = phase!=="explore"; c.textContent=t().foundLabel+found.length; }
 
-/* ---------- state ---------- */
-var phase="ask", choice=null, nodes={};
-function t(){ return T[store.lang]; }
-
+/* ---------- pitch drawing ---------- */
+var nodes={}, pos={};
+function refList(){ var r=["m"]; inst.us.forEach(function(_,i){ r.push("u"+i); }); inst.them.forEach(function(_,i){ r.push("t"+i); }); return r; }
 function drawPitch(){
-  svg.innerHTML="";
+  svg.innerHTML=""; nodes={shadow:{}}; pos={};
+  var y0=inst.y0; svg.setAttribute("viewBox","0 "+y0+" 370 296");
   var defs=el("defs",{},svg);
-  var cp=el("clipPath",{id:"field"},defs); el("rect",{x:0,y:0,width:370,height:302},cp);
-  var g=el("radialGradient",{id:"torch",gradientUnits:"userSpaceOnUse",cx:SC.ball[0],cy:SC.ball[1],r:300},defs);
-  el("stop",{offset:"0","stop-color":"#FFEFA6","stop-opacity":".62"},g);
-  el("stop",{offset:".45","stop-color":"#FFEFA6","stop-opacity":".22"},g);
-  el("stop",{offset:"1","stop-color":"#FFEFA6","stop-opacity":"0"},g);
+  var cp=el("clipPath",{id:"field"},defs); el("rect",{x:0,y:y0,width:370,height:296},cp);
+  var st0=initState(inst); inst.ball0=st0.ball.slice();
+  var g=el("radialGradient",{id:"torch",gradientUnits:"userSpaceOnUse",cx:inst.ball0[0],cy:inst.ball0[1],r:300},defs);
+  el("stop",{offset:"0","stop-color":"#FFEFA6","stop-opacity":".6"},g); el("stop",{offset:".45","stop-color":"#FFEFA6","stop-opacity":".2"},g); el("stop",{offset:"1","stop-color":"#FFEFA6","stop-opacity":"0"},g);
+  [["arrowR","#E53935"],["arrowY","#FFE45C"]].forEach(function(a){ var mk=el("marker",{id:a[0],viewBox:"0 0 10 10",refX:"6",refY:"5",markerWidth:"3.2",markerHeight:"3.2",orient:"auto"},defs); el("path",{d:"M0,0 L10,5 L0,10 z",fill:a[1],stroke:"#fff","stroke-width":"1"},mk); });
   var bl=el("filter",{id:"soft",x:"-20%",y:"-20%",width:"140%",height:"140%"},defs); el("feGaussianBlur",{stdDeviation:"1.6"},bl);
-
-  // grass stripes
-  el("rect",{x:0,y:0,width:370,height:302,fill:GRASS},svg);
-  // markings
-  var m=el("g",{fill:"none",stroke:"rgba(255,255,255,.85)","stroke-width":2},svg);
-  el("rect",{x:6,y:12,width:358,height:280},m);
-  el("path",{d:"M135 12 A50 50 0 0 0 235 12"},m);
-  el("rect",{x:102,y:202,width:166,height:90},m);
-  el("rect",{x:166,y:292,width:38,height:8,fill:"rgba(255,255,255,.35)"},m);
-
-  // reveal layers
-  nodes.light=el("rect",{x:0,y:0,width:370,height:302,fill:"url(#torch)","class":"reveal",id:"light"},svg);
-  nodes.shadows=el("g",{"class":"reveal",id:"shadows","clip-path":"url(#field)"},svg);
-  nodes.shadow=SC.opps.map(function(o){ return el("polygon",{points:shadowPoly(SC.ball,o),fill:"rgba(6,26,14,.42)",filter:"url(#soft)","class":"shadow"},nodes.shadows); });
-  nodes.lines=el("g",{"class":"reveal",id:"passlines","stroke-linecap":"round"},svg);
+  el("rect",{x:-10,y:y0-10,width:390,height:320,fill:"#3A9A5B"},svg);
+  var mk=el("g",{fill:"none",stroke:"rgba(255,255,255,.85)","stroke-width":2},svg);
+  el("rect",{x:6,y:6,width:358,height:538},mk);
+  el("line",{x1:6,y1:275,x2:364,y2:275},mk);
+  el("circle",{cx:185,cy:275,r:50},mk); el("circle",{cx:185,cy:275,r:2.5,fill:"#fff"},mk);
+  el("rect",{x:102,y:6,width:166,height:90},mk); el("rect",{x:102,y:454,width:166,height:90},mk);
+  el("rect",{x:166,y:-2,width:38,height:8,fill:"rgba(255,255,255,.35)"},mk); el("rect",{x:166,y:544,width:38,height:8,fill:"rgba(255,255,255,.35)"},mk);
+  nodes.light=el("rect",{x:-10,y:y0-10,width:390,height:320,fill:"url(#torch)","class":"reveal"},svg);
+  nodes.shadows=el("g",{"class":"reveal d1","clip-path":"url(#field)"},svg);
+  nodes.over=el("g",{"class":"reveal d2","stroke-linecap":"round"},svg);
   nodes.tryline=el("g",{"stroke-linecap":"round"},svg);
   nodes.found=el("g",{},svg);
-  nodes.zoneLayer=el("g",{},svg);
-
-  // zones
-  nodes.zones={};
-  Object.keys(SC.zones).forEach(function(k){
-    var z=SC.zones[k], label=t().zones[k];
-    var zg=el("g",{"class":"zone","data-zone":k,tabindex:"0",role:"button","aria-label":k+": "+label},nodes.zoneLayer);
-    el("circle",{cx:z.p[0],cy:z.p[1],r:R_ZONE,"class":"ring"},zg);
-    var h=24, px=z.pill[0], py=z.pill[1];
-    var bg=el("rect",{y:py-h/2,height:h,rx:12,fill:"#FFFFFF",stroke:"rgba(0,0,0,.18)"},zg);
-    var dot=el("circle",{cy:py,r:9,fill:"#15301F"},zg);
-    var lt=el("text",{y:py+4.3,"text-anchor":"middle","font-size":"12.5","font-weight":"700",fill:"#FFD23F"},zg); lt.textContent=k;
-    var tt=el("text",{y:py+4.5,"font-size":"13","font-weight":"700",fill:"#15301F"},zg); tt.textContent=label;
-    var tw; try{ tw=tt.getComputedTextLength(); }catch(e){} if(!tw) tw=label.length*7.4;
-    var w=34+tw, x0 = z.pill[2]==="start" ? px : px-w/2;
-    bg.setAttribute("x",x0); bg.setAttribute("width",w);
-    dot.setAttribute("cx",x0+12); lt.setAttribute("x",x0+12); tt.setAttribute("x",x0+26);
-    zg.addEventListener("click",function(){ choose(k); });
-    zg.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); choose(k); } });
-    nodes.zones[k]=zg;
+  nodes.zones=el("g",{},svg);
+  nodes.zone={};
+  var zoneSpots=[];
+  if(lesson.mode==="spot") lesson.opts.forEach(function(k){
+    var o=inst.options[k], zg=el("g",{"class":"zone","data-zone":k},nodes.zones);
+    var onMax = dist(o.at, inst.m.p) < 14;   /* "stay where you are": ring drawn wider so it shows around Max */
+    el("circle",{cx:o.at[0],cy:o.at[1],r:onMax?26:16,"class":"ring"},zg);
+    nodes.zone[k]=zg; zoneSpots.push([k,o.at,onMax]);
   });
-
-  // players
-  var pg=el("g",{"font-family":"inherit"},svg);
-  SC.opps.forEach(function(o,i){ nodes["opp"+i]=el("circle",{cx:o[0],cy:o[1],r:R_BODY,fill:THEM,stroke:"#fff","stroke-width":3},pg); });
-  el("circle",{cx:SC.keeper[0],cy:SC.keeper[1],r:R_BODY,fill:US,stroke:"#fff","stroke-width":3},pg);
-  var kl=el("text",{x:SC.keeper[0]-17,y:SC.keeper[1]+4.5,"text-anchor":"end","font-size":"12","font-weight":"700",fill:"#fff",stroke:"rgba(0,0,0,.35)","stroke-width":"3","paint-order":"stroke"},pg); kl.textContent=t().keeper;
-
-  nodes.max=el("g",{transform:"translate("+SC.start[0]+" "+SC.start[1]+")"},pg);
-  el("circle",{r:16,fill:"none",stroke:"#FFD23F","stroke-width":3.5},nodes.max);
-  el("circle",{r:R_BODY,fill:US,stroke:"#fff","stroke-width":3},nodes.max);
-  var yr=el("rect",{y:-39,height:19,rx:9.5,fill:"#FFD23F"},nodes.max);
-  var yt=el("text",{x:0,y:-25.5,"text-anchor":"middle","font-size":"12.5","font-weight":"700",fill:"#15301F"},nodes.max); yt.textContent=t().you;
-  var yl; try{ yl=yt.getComputedTextLength(); }catch(e){} if(!yl) yl=t().you.length*7.4;
-  yr.setAttribute("x",-(yl+16)/2); yr.setAttribute("width",yl+16);
-
-  nodes.ball=el("g",{transform:"translate("+SC.ball[0]+" "+SC.ball[1]+")"},pg);
-  el("circle",{r:5.5,fill:"#fff",stroke:"#1b1b1b","stroke-width":1.5},nodes.ball);
-  el("circle",{r:1.8,fill:"#1b1b1b"},nodes.ball);
+  var pg=el("g",{},svg); nodes.ent={};
+  function player(ref, e, color){
+    var gg=el("g",{"class":"fadeable",transform:"translate("+e.p[0]+" "+e.p[1]+")"},pg);
+    if(ref==="m") el("circle",{r:16,fill:"none",stroke:"#FFD23F","stroke-width":3.5},gg);
+    el("circle",{r:R_BODY,fill:color,stroke:"#fff","stroke-width":3},gg);
+    if(ref==="m"){
+      var yr=el("rect",{y:-39,height:19,rx:9.5,fill:"#FFD23F"},gg);
+      var yt=el("text",{x:0,y:-25.5,"text-anchor":"middle","font-size":"12.5","font-weight":"700",fill:"#15301F"},gg); yt.textContent=t().you;
+      var w; try{ w=yt.getComputedTextLength(); }catch(_){ } if(!w) w=t().you.length*7.4;
+      yr.setAttribute("x",-(w+16)/2); yr.setAttribute("width",w+16);
+      nodes.mtag={r:yr,t:yt,w:w,c:null};
+    } else if(e.k){
+      var kt=el("text",{x:-17,y:4.5,"text-anchor":"end","font-size":"11.5","font-weight":"700",fill:"#fff",stroke:"rgba(0,0,0,.4)","stroke-width":"3","paint-order":"stroke"},gg); kt.textContent=t().keeper;
+    }
+    nodes.ent[ref]=gg; pos[ref]=e.p.slice();
+  }
+  inst.them.forEach(function(e,i){ player("t"+i, e, "#E53935"); });
+  inst.us.forEach(function(e,i){ player("u"+i, e, "#000000"); });
+  player("m", inst.m, "#000000");
+  nodes.ball=el("g",{transform:"translate("+inst.ball0[0]+" "+inst.ball0[1]+")"},pg);
+  el("circle",{r:6.5,fill:"#fff",stroke:"#1b1b1b","stroke-width":1.6},nodes.ball); el("circle",{r:2.1,fill:"#1b1b1b"},nodes.ball);
+  pos.ball=inst.ball0.slice();
+  /* what an opponent is doing (e.g. the defender stepping towards you) */
+  nodes.arrows=el("g",{},svg);
+  if(lesson.arrows && phase==="ask") lesson.arrows.forEach(function(a){
+    var p0=pos[a[0]], p1=Array.isArray(a[1]) ? a[1] : pos[a[1]]; if(!p0||!p1) return;
+    var d=dist(p0,p1)||1, ux=(p1[0]-p0[0])/d, uy=(p1[1]-p0[1])/d, s0=[p0[0]+ux*15,p0[1]+uy*15], s1=[p0[0]+ux*Math.min(40,d-16),p0[1]+uy*Math.min(40,d-16)];
+    el("line",{x1:s0[0],y1:s0[1],x2:s1[0],y2:s1[1],stroke:"#fff","stroke-width":7,"stroke-linecap":"round"},nodes.arrows);
+    el("line",{x1:s0[0],y1:s0[1],x2:s1[0],y2:s1[1],stroke:"#E53935","stroke-width":4,"stroke-linecap":"round","marker-end":"url(#arrowR)"},nodes.arrows);
+  });
+  /* letter badges sit above the players so a teammate or Max never hides them */
+  nodes.zbadges=el("g",{},svg); nodes.zoneB={};
+  zoneSpots.forEach(function(z){
+    var k=z[0], p=z[1], bx, by;
+    if(z[2]){ by=p[1]; bx = p[0]-31 < 14 ? p[0]+31 : p[0]-31; } else { bx=p[0]+12; by=p[1]-12; }
+    var bg=el("g",{"class":"zone","data-zone":k},nodes.zbadges);
+    el("circle",{cx:bx,cy:by,r:10,fill:"#15301F",stroke:"#fff","stroke-width":1.5},bg);
+    var lt=el("text",{x:bx,y:by+4.4,"text-anchor":"middle","font-size":"13","font-weight":"700",fill:"#FFD23F"},bg); lt.textContent=letters[k];
+    nodes.zoneB[k]=bg;
+  });
+  placeTag(pos.m);
   nodes.marks=el("g",{},svg);
-  SC.opps.forEach(function(o,i){
-    var h=el("circle",{cx:o[0],cy:o[1],r:22,fill:"transparent","pointer-events":"all","class":"opp-hit","data-opp":i},svg);
-    h.addEventListener("click",function(e){ e.stopPropagation(); toggleShadow(i); });
+  nodes.hits=el("g",{},svg);
+  /* big invisible tap targets for answer spots, on top of the players so a teammate under a spot is still tappable */
+  nodes.zhits=el("g",{},svg);
+  if(lesson.mode==="spot" && phase==="ask") lesson.opts.forEach(function(k){
+    var o=inst.options[k], hc=el("circle",{cx:o.at[0],cy:o.at[1],r:24,fill:"transparent","pointer-events":"all","data-hit":k,style:"cursor:pointer"},nodes.zhits);
+    hc.addEventListener("click",function(){ choose(k); });
   });
 }
-function toggleShadow(i){
-  if(phase!=="result") return;
-  nodes.shadow[i].classList.toggle("off");
+function setPos(ref,p){ pos[ref]=p.slice(); nodes.ent[ref].setAttribute("transform","translate("+p[0].toFixed(1)+" "+p[1].toFixed(1)+")"); if(ref==="m") placeTag(p); }
+/* "You" tag goes above Max, or below if a player, an answer letter or the edge is in the way; rechecked whenever Max moves */
+function placeTag(p){
+  if(!nodes.mtag||!p) return;
+  var others=Object.keys(pos).filter(function(k){ return k!=="m" && k!=="ball"; }).map(function(k){ return pos[k]; });
+  if(phase==="ask" && lesson.arrows) lesson.arrows.forEach(function(ar){ var q0=pos[ar[0]], q1=Array.isArray(ar[1])?ar[1]:pos[ar[1]]; if(q0&&q1){ var dd=dist(q0,q1)||1; for(var f=15; f<=Math.min(40,dd-16); f+=8) others.push([q0[0]+(q1[0]-q0[0])/dd*f, q0[1]+(q1[1]-q0[1])/dd*f]); } });
+  if(phase==="ask" && lesson.mode==="spot") lesson.opts.forEach(function(k){ var a=inst.options[k].at; if(dist(a,inst.m.p)>=14){ others.push(a); others.push([a[0]+12,a[1]-12]); } });
+  var w=nodes.mtag.w, bw=w+16, bh=19;
+  /* candidate boxes relative to Max: above, below, right, left */
+  var cands=[[-bw/2,-39],[-bw/2,20],[20,-9.5],[-20-bw,-9.5]];
+  var fits=function(c){ var x0=p[0]+c[0], y0b=p[1]+c[1]; return y0b>inst.y0+2 && y0b+bh<inst.y0+294 && x0>4 && x0+bw<366; };
+  var free=function(c){ return !others.some(function(q){ var dx=q[0]-p[0], dy=q[1]-p[1]; return dx>c[0]-12 && dx<c[0]+bw+12 && dy>c[1]-12 && dy<c[1]+bh+12; }); };
+  var pick=null; cands.forEach(function(c){ if(!pick && fits(c) && free(c)) pick=c; });
+  if(!pick) cands.forEach(function(c){ if(!pick && fits(c)) pick=c; });
+  if(!pick) pick=cands[0];
+  if(nodes.mtag.c!==pick){ nodes.mtag.r.setAttribute("x",pick[0]); nodes.mtag.r.setAttribute("y",pick[1]); nodes.mtag.t.setAttribute("x",pick[0]+bw/2); nodes.mtag.t.setAttribute("y",pick[1]+13.5); nodes.mtag.c=pick; }
 }
-function clear(g){ while(g.firstChild) g.removeChild(g.firstChild); }
+function setBall(p){ pos.ball=p.slice(); nodes.ball.setAttribute("transform","translate("+p[0].toFixed(1)+" "+p[1].toFixed(1)+")"); }
+function ringAt(p, cls, r){ el("circle",{cx:p[0],cy:p[1],r:r||17,fill:"none",stroke: cls==="good"?"#FFE45C":"#FF4D3D","stroke-width":3.5},nodes.marks); }
 function passLine(g,a,b,ok){
   el("line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"rgba(0,0,0,.35)","stroke-width":7},g);
-  if(ok) el("line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"#FFE45C","stroke-width":4.5},g);
-  else el("line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"#FF4D3D","stroke-width":3.5,"stroke-dasharray":"7 6"},g);
+  el("line",ok?{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"#FFE45C","stroke-width":4.5}:{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"#FF4D3D","stroke-width":3.5,"stroke-dasharray":"7 6"},g);
 }
+function cross(g,p){ var s=6, d="M"+(p[0]-s)+" "+(p[1]-s)+"L"+(p[0]+s)+" "+(p[1]+s)+"M"+(p[0]+s)+" "+(p[1]-s)+"L"+(p[0]-s)+" "+(p[1]+s);
+  el("path",{d:d,stroke:"#15301F","stroke-width":7},g); el("path",{d:d,stroke:"#fff","stroke-width":3.5},g); }
 
-function drawPassLines(){
-  Object.keys(SC.zones).forEach(function(k){
-    var target=SC.zones[k].p, blk=blockerFor(SC.ball,target), end=backOff(SC.ball,target,R_ZONE-6);
-    passLine(nodes.lines,SC.ball,end,!blk);
-    if(blk){
-      var p=blk.point, s=6;
-      el("path",{d:"M"+(p[0]-s)+" "+(p[1]-s)+"L"+(p[0]+s)+" "+(p[1]+s)+"M"+(p[0]+s)+" "+(p[1]-s)+"L"+(p[0]-s)+" "+(p[1]+s),stroke:"#15301F","stroke-width":7},nodes.lines);
-      el("path",{d:"M"+(p[0]-s)+" "+(p[1]-s)+"L"+(p[0]+s)+" "+(p[1]+s)+"M"+(p[0]+s)+" "+(p[1]-s)+"L"+(p[0]-s)+" "+(p[1]+s),stroke:"#fff","stroke-width":3.5},nodes.lines);
+/* overlays for the chosen spot */
+function drawOverlays(key){
+  var o=inst.ov, st=initState(inst), at=inst.options[key].at;
+  st.m.p=[at[0],at[1]];
+  var ball=inst.ball0;
+  if(o.shadows){
+    var refs = allRefs(st, o.shadows);
+    refs.forEach(function(ref){
+      if(ref===inst.holder) return;
+      var e=ent(st,ref), poly=shadowPoly(ball,e); if(!poly) return;
+      var pts=poly.map(function(q){ return q[0].toFixed(1)+","+q[1].toFixed(1); }).join(" ");
+      nodes.shadow[ref]=el("polygon",{points:pts,fill:"rgba(6,26,14,.42)",filter:"url(#soft)","class":"shadow"},nodes.shadows);
+      var hp = ref==="m" ? at : e.p;
+      var hc=el("circle",{cx:hp[0],cy:hp[1],r:22,fill:"transparent","pointer-events":"all","class":"hit"},nodes.hits);
+      hc.addEventListener("click",function(ev){ ev.stopPropagation(); if(phase==="result") nodes.shadow[ref].classList.toggle("off"); });
+    });
+  } else nodes.light.style.display="none";
+  if(o.goalcover){
+    var gr=reach(st.m), dM=dist(ball,st.m.p), aM=Math.atan2(st.m.p[1]-ball[1], st.m.p[0]-ball[0]), th=Math.asin(Math.min(1,gr/dM)), segs=[], cur=null;
+    for(var gx=166; gx<=204; gx++){
+      var ga=Math.atan2(544-ball[1], gx-ball[0]), covered = angDiff(ga,aM)<th && dM<dist(ball,[gx,544]);
+      if(!covered){ if(!cur) cur=[gx,gx]; else cur[1]=gx; } else if(cur){ segs.push(cur); cur=null; }
     }
-  });
+    if(cur) segs.push(cur);
+    segs.forEach(function(sg){ el("line",{x1:sg[0],y1:543,x2:Math.max(sg[1],sg[0]+1),y2:543,stroke:"#FF4D3D","stroke-width":9,"stroke-linecap":"round"},nodes.over); });
+  }
+  if(o.danger){
+    el("rect",{x:132,y:470,width:106,height:74,rx:6,fill:"rgba(255,77,61,.16)",stroke:"#FF4D3D","stroke-width":2.5,"stroke-dasharray":"6 5"},nodes.over);
+  }
+  if(o.road){
+    var r0=initState(inst).them[0].p, gc=[185,544];
+    if(key===lesson.ok){
+      var blk=inst.options[lesson.ok].at;
+      el("line",{x1:r0[0],y1:r0[1],x2:gc[0],y2:gc[1],stroke:"#FF4D3D","stroke-width":3.5,"stroke-dasharray":"7 6",opacity:".9"},nodes.over);
+      cross(nodes.over,[ (blk[0]+gc[0]*0)/1, blk[1]+14 ].map(function(v,i){ return i===0 ? r0[0]+(gc[0]-r0[0])*((blk[1]+14-r0[1])/(gc[1]-r0[1])) : v; }));
+      var side=null; (inst.options[lesson.ok].steps||[]).forEach(function(stp){ if(stp[0]==="run" && stp[1]==="t0" && !side) side=stp[2]; });
+      if(side){ el("line",{x1:r0[0],y1:r0[1],x2:side[0],y2:side[1],stroke:"rgba(0,0,0,.35)","stroke-width":7,"stroke-linecap":"round"},nodes.over);
+        el("line",{x1:r0[0],y1:r0[1],x2:side[0],y2:side[1],stroke:"#FFE45C","stroke-width":4,"stroke-linecap":"round","marker-end":"url(#arrowY)"},nodes.over); }
+    } else {
+      el("line",{x1:r0[0],y1:r0[1],x2:gc[0],y2:gc[1]-8,stroke:"#FF4D3D","stroke-width":4.5,"stroke-linecap":"round","marker-end":"url(#arrowR)"},nodes.over);
+    }
+  }
+  if(o.trail){
+    var a0=inst.m.p, a1=inst.options[lesson.ok].at;
+    el("line",{x1:a0[0],y1:a0[1],x2:a1[0],y2:a1[1],stroke:"rgba(0,0,0,.35)","stroke-width":7,"stroke-linecap":"round"},nodes.over);
+    el("line",{x1:a0[0],y1:a0[1],x2:a1[0],y2:a1[1],stroke:"#FFE45C","stroke-width":4,"stroke-dasharray":"8 7","stroke-linecap":"round","marker-end":"url(#arrowY)"},nodes.over);
+  }
+  if(o.tri){
+    var tp=o.tri.map(function(r){ return ent(st,r).p; }); tp.push(inst.options[lesson.ok].at);
+    var good=key===lesson.ok;
+    el("polygon",{points:tp.map(function(q){ return q[0].toFixed(1)+","+q[1].toFixed(1); }).join(" "),fill:good?"rgba(255,228,92,.28)":"rgba(255,228,92,.12)",stroke:"#FFE45C","stroke-width":3,"stroke-linejoin":"round","stroke-dasharray":good?"none":"6 5"},nodes.over);
+  }
+  if(o.lines){
+    var team=teamOf(inst.holder), st2=initState(inst);
+    lesson.opts.forEach(function(k){
+      var op=inst.options[k]; if(op.nl) return;
+      var tgt=op.at, blk=blockerOn(st2, ball, tgt, allRefs(st2, team==="us"?"them":"us"), ["m"]);
+      var end=backOff(ball,tgt,14);
+      passLine(nodes.over, ball, end, !blk);
+      if(blk) cross(nodes.over, blk.point);
+    });
+  }
+  if(o.string){
+    var src = o.string==="ball" ? ball : ent(st,o.string).p;
+    el("line",{x1:src[0],y1:src[1],x2:185,y2:544,stroke:"#fff","stroke-width":2.5,"stroke-dasharray":"3 6",opacity:".95"},nodes.over);
+    el("circle",{cx:185,cy:544,r:5,fill:"#fff"},nodes.over);
+  }
+  if(o.hull){
+    /* the balloon: our team's outline, filled; after a wrong answer the right balloon is drawn dashed for comparison */
+    var hullAt=function(mp){ var q2=st.us.filter(function(e){ return !e.k; }).map(function(e){ return e.p; }); q2.push(mp); return convexHull(q2); };
+    var pstr=function(hh){ return hh.map(function(q){ return q[0].toFixed(1)+","+q[1].toFixed(1); }).join(" "); };
+    if(key!==lesson.ok){ var hb=hullAt(inst.options[lesson.ok].at); if(hb.length>2) el("polygon",{points:pstr(hb),fill:"none",stroke:"#FFE45C","stroke-width":2.5,"stroke-dasharray":"7 6","stroke-linejoin":"round"},nodes.over); }
+    var hh=hullAt(st.m.p);
+    if(hh.length>2){
+      el("polygon",{points:pstr(hh),fill:"rgba(255,228,92,.26)",stroke:"#FFE45C","stroke-width":3.5,"stroke-linejoin":"round"},nodes.over);
+      var cx=0,cy=0; hh.forEach(function(q){ cx+=q[0]; cy+=q[1]; }); cx/=hh.length; cy/=hh.length;
+      var crowd=st.us.concat(st.them).map(function(e){ return e.p; }).concat([st.m.p, ball]).some(function(q){ return dist(q,[cx,cy])<20; });
+      if(!crowd){ var bt=el("text",{x:cx,y:cy+7,"text-anchor":"middle","font-size":"20"},nodes.over); bt.textContent="🎈"; }
+    }
+  }
+  if(o.dist){
+    var st3=initState(inst);
+    st3.us.filter(function(e){ return !e.k; }).forEach(function(e){ el("line",{x1:e.p[0],y1:e.p[1],x2:ball[0],y2:ball[1],stroke:"#fff","stroke-width":2,"stroke-dasharray":"4 5"},nodes.over); });
+    el("line",{x1:st3.m.p[0],y1:st3.m.p[1],x2:ball[0],y2:ball[1],stroke:"#FFE45C","stroke-width":4},nodes.over);
+    el("circle",{cx:st3.m.p[0],cy:st3.m.p[1],r:11,fill:"rgba(255,255,255,.12)",stroke:"#FFE45C","stroke-width":2.5,"stroke-dasharray":"4 4"},nodes.over);
+  }
+}
+function convexHull(p){
+  p=p.slice().sort(function(a,b){ return a[0]-b[0]||a[1]-b[1]; });
+  function cr(o,a,b){ return (a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]); }
+  var lo=[],up=[];
+  p.forEach(function(q){ while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],q)<=0) lo.pop(); lo.push(q); });
+  p.slice().reverse().forEach(function(q){ while(up.length>=2&&cr(up[up.length-2],up[up.length-1],q)<=0) up.pop(); up.push(q); });
+  return lo.slice(0,-1).concat(up.slice(0,-1));
+}
+function revealOn(){ [nodes.light,nodes.shadows,nodes.over].forEach(function(n){ n.classList.add("on"); }); }
+function focusZones(key){
+  lesson.opts.forEach(function(k){ var c = k===key ? "chosen" : (k===lesson.ok ? "best" : "dim"); if(nodes.zone[k]) nodes.zone[k].classList.add(c); if(nodes.zoneB&&nodes.zoneB[k]) nodes.zoneB[k].classList.add(c); });
+  if(nodes.zhits) nodes.zhits.style.display="none";
+  if(nodes.arrows) nodes.arrows.style.display="none";
 }
 
-var maxPos=SC.start.slice(), found=[], busy=false;
-function setMax(p){ maxPos=[p[0],p[1]]; nodes.max.setAttribute("transform","translate("+p[0].toFixed(1)+" "+p[1].toFixed(1)+")"); }
-function setBall(p){ nodes.ball.setAttribute("transform","translate("+p[0].toFixed(1)+" "+p[1].toFixed(1)+")"); }
-function lerp(a,b,k){ return [a[0]+(b[0]-a[0])*k, a[1]+(b[1]-a[1])*k]; }
+/* ---------- flash (look before it arrives) ---------- */
+var flashing=false;
+function runFlash(){
+  flashing=true; renderChoices(); hintForPhase();
+  nodes.zones.style.display="none"; if(nodes.zbadges) nodes.zbadges.style.display="none";
+  $("flash").hidden=false; var bar=$("flashBar"); bar.style.animation="none"; void bar.offsetWidth; bar.style.animation="";
+  setTimeout(function(){
+    $("flash").hidden=true;
+    Object.keys(nodes.ent).forEach(function(ref){ if(ref!=="m" && ref!==inst.holder) nodes.ent[ref].classList.add("hidden-ent"); });
+    nodes.zones.style.display=""; if(nodes.zbadges) nodes.zbadges.style.display="";
+    flashing=false; renderChoices(); hintForPhase();
+  }, reduce?300:2600);
+}
+function unhideAll(){ Object.keys(nodes.ent).forEach(function(ref){ nodes.ent[ref].classList.remove("hidden-ent"); }); }
 
-function outcome(k){
-  var target=SC.zones[k].p, blk=blockerFor(SC.ball,target);
-  return { target:target, blk:blk, ballEnd: blk ? backOff(SC.ball, blk.point, R_BODY+4) : backOff(SC.ball, target, R_BODY+3), ok: !blk && k===SC.best };
-}
-function markOutcome(o){
-  if(o.blk) el("circle",{cx:o.blk.opp[0],cy:o.blk.opp[1],r:17,fill:"none",stroke:"#FF4D3D","stroke-width":3.5},nodes.marks);
-  else el("circle",{cx:o.target[0],cy:o.target[1],r:20,fill:"none",stroke:"#FFE45C","stroke-width":3.5},nodes.marks);
-}
-function focusZones(k){
-  Object.keys(nodes.zones).forEach(function(z){
-    var c = z===k ? "chosen" : (z===SC.best ? "best" : "dim");
-    nodes.zones[z].classList.add(c); nodes.zones[z].setAttribute("tabindex","-1");
-  });
-}
-function revealOn(){ [nodes.light,nodes.shadows,nodes.lines].forEach(function(n){ n.classList.add("on"); }); }
-
-function choose(k){
-  if(phase!=="ask") return;
-  phase="playing"; choice=k; document.body.dataset.state="playing";
-  document.getElementById("hint").hidden=true;
-  var o=outcome(k);
-  focusZones(k);
-  drawPassLines();
-  (async function(){
-    if(dist(SC.start,o.target)>1) await tween(550,function(e){ setMax(lerp(SC.start,o.target,e)); });
-    await wait(120);
-    await tween(750,function(e){ setBall(lerp(SC.ball,o.ballEnd,e)); });
-    markOutcome(o);
-    await wait(250);
-    revealOn();
-    await wait(700);
-    finish(o);
-  })();
+/* ---------- play an option ---------- */
+async function playKey(key){
+  var sim=simulate(inst,key), evs=sim.events;
+  for(var i=0;i<evs.length;i++){
+    var e=evs[i];
+    if(e.t==="move"){
+      var from=pos[e.ref].slice(), to=e.to, off = e.withBall ? (teamOf(e.ref)==="us"?[0,-10]:[0,10]) : null, d=dist(from,to);
+      await tween(Math.min(900, 220+d*2.4), function(k){ var p=lerp(from,to,k); setPos(e.ref,p); if(off) setBall([p[0]+off[0],p[1]+off[1]]); });
+      await wait(60);
+    } else if(e.t==="ball"){
+      var b0=pos.ball.slice(), b1=e.to, d2=dist(b0,b1);
+      await tween(e.quick?180:Math.min(900,(e.fast?160:260)+d2*(e.fast?1.1:1.7)), function(k){ setBall(lerp(b0,b1,k)); });
+    } else if(e.t==="ring"){
+      ringAt(pos[e.ref]||e.at, e.cls); await wait(120);
+    } else if(e.t==="goal"){
+      var gy=e.at[1]<275 ? -2 : 544;
+      el("rect",{x:166,y:gy,width:38,height:8,fill:e.cls==="good"?"#FFE45C":"#FF4D3D"},nodes.marks);
+      ringAt(e.at, e.cls, 14); await wait(150);
+    }
+  }
+  return sim.result;
 }
 
-function finish(o){
-  var newStar=false;
-  if(o.ok && !store.done[SC.id]){ store.done[SC.id]=true; store.stars++; newStar=true; save(); }
-  phase="result"; document.body.dataset.state="result";
-  lastNewStar=newStar;
-  fillPanel(); hintForPhase();
-  var panel=document.getElementById("panel"); panel.hidden=false;
-  updateStars();
-  try{ panel.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"}); }catch(e){}
-  document.getElementById("again").focus({preventScroll:true});
+async function choose(key){
+  if(phase!=="ask" || busy || flashing) return;
+  busy=true; phase="playing"; document.body.dataset.state="playing"; choiceKey=key;
+  renderChoices(); setHint("");
+  focusZones(key);
+  await playKey(key);
+  unhideAll();
+  drawOverlays(key);
+  await wait(200); revealOn(); await wait(600);
+  var ok = key===lesson.ok;
+  streak = ok ? streak+1 : 0;
+  phase="result"; document.body.dataset.state="result"; busy=false;
+  renderPlayStatic();
+  fillPanel(); $("panel").hidden=false;
+  try{ $("panel").scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"}); }catch(_){}
 }
-var lastNewStar=false;
-
+function renderPlayStatic(){
+  var sk=$("streak"); sk.innerHTML=""; for(var i=0;i<3;i++) sk.appendChild(h("i", i<streak?"on":"")); sk.setAttribute("aria-label", streak+"/3");
+  renderChoices(); hintForPhase();
+}
 function fillPanel(){
-  var o=outcome(choice), r=t().res[choice], v=document.getElementById("verdict");
-  v.textContent=(o.ok?"✅ ":"✋ ")+r.h; v.className="verdict "+(o.ok?"good":"bad");
-  document.getElementById("detail").textContent=r.d;
-  var sm=document.getElementById("starmsg"); sm.hidden=!lastNewStar; sm.textContent=t().star;
-  document.getElementById("trickTitle").textContent="🔦 "+t().trickT;
-  document.getElementById("trickText").textContent=t().trick;
-  document.getElementById("talk").textContent="💬 "+t().talk;
-  var ag=document.getElementById("again"), bo=document.getElementById("bonus");
-  ag.textContent=o.ok?t().replay:t().again; ag.className=o.ok?"btn ghost":"btn";
-  bo.hidden=!o.ok; bo.textContent=t().bonus;
+  var ok = choiceKey===lesson.ok, v=$("verdict"), sim=simulate(inst,choiceKey);
+  var cls = ok ? "good" : (sim.result==="meh" ? "meh" : "bad");
+  v.textContent = (ok?"✅ ":"✋ ") + (ok ? t().good : (cls==="meh" ? t().meh : t().bad)); v.className="verdict "+cls;
+  $("detail").textContent=t().L[lesson.id].x;
+  var sm=$("streakmsg"); sm.hidden = ok; sm.textContent=t().streakReset;
+  $("showme").hidden = ok || showingKey===lesson.ok; $("showme").textContent=t().showMe;
+  $("bonus").hidden = !(ok && inst.bonus && inst.holder[0]==="u"); $("bonus").textContent=t().bonus;
+  $("next").textContent = streak>=3 ? t().next+" ⭐" : t().again;
 }
-function setHint(text,cls){ var h=document.getElementById("hint"); h.hidden=false; h.textContent=text; h.className="hint"+(cls?" "+cls:""); }
-function updateCount(){ var c=document.getElementById("count"); c.hidden=phase!=="explore"; c.textContent=t().foundLabel+found.length; }
-function hintForPhase(){
-  if(phase==="ask") setHint(t().hint);
-  else if(phase==="result") setHint(t().hintResult);
-  else if(phase==="explore") setHint(t().hintExplore);
-}
-
-function drawFinal(){
-  var o=outcome(choice);
+function drawFinal(key){
+  var sim=simulate(inst,key);
   svg.classList.add("instant");
-  focusZones(choice); drawPassLines(); setMax(o.target); setBall(o.ballEnd); markOutcome(o); revealOn();
+  focusZones(choiceKey);
+  Object.keys(nodes.ent).forEach(function(ref){ var e=ent(sim.state,ref); setPos(ref,e.p); });
+  setBall(sim.state.ball);
+  sim.events.forEach(function(e){ if(e.t==="ring") ringAt(ent(sim.state,e.ref).p, e.cls); if(e.t==="goal") ringAt(e.at,e.cls,14); });
+  drawOverlays(key); revealOn();
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ svg.classList.remove("instant"); }); });
 }
-
-function updateStars(){ var s=document.getElementById("stars"); s.textContent="⭐ "+store.stars; s.setAttribute("aria-label",t().starsLabel+": "+store.stars); }
-
-function render(){
-  document.documentElement.lang=store.lang;
-  document.title=t().brand;
-  document.getElementById("brand").textContent=t().brand;
-  document.getElementById("question").textContent=phase==="explore"?t().bonus:t().q;
-  document.getElementById("lgUs").textContent=t().us;
-  document.getElementById("lgThem").textContent=t().them;
-  document.querySelectorAll(".lang button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.lang===store.lang)); });
-  updateStars();
-  drawPitch();
-  if(phase==="result"){ drawFinal(); fillPanel(); }
-  else if(phase==="explore") drawExplore();
-  document.getElementById("done").textContent=t().done;
-  hintForPhase(); updateCount();
+async function showMe(){
+  if(busy) return; busy=true; showingKey=lesson.ok;
+  $("showme").hidden=true;
+  drawPitch(); focusZones(choiceKey);
+  try{ svg.scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"}); }catch(_){}
+  await wait(250);
+  await playKey(lesson.ok);
+  drawOverlays(lesson.ok); await wait(150); revealOn(); await wait(500);
+  busy=false;
 }
-function drawExplore(){
-  svg.classList.add("instant");
-  revealOn(); nodes.zoneLayer.style.display="none";
-  found.forEach(function(p){ el("circle",{cx:p[0],cy:p[1],r:5.5,fill:"#FFE45C",stroke:"#15301F","stroke-width":2},nodes.found); });
-  setMax(maxPos); setBall(SC.ball);
-  requestAnimationFrame(function(){ requestAnimationFrame(function(){ svg.classList.remove("instant"); }); });
-}
-function enterExplore(){
-  phase="explore"; document.body.dataset.state="explore";
-  document.getElementById("panel").hidden=true;
-  document.getElementById("done").hidden=false;
-  nodes.zoneLayer.style.display="none";
-  clear(nodes.lines); clear(nodes.marks); setBall(SC.ball);
-  nodes.shadow.forEach(function(sh){ sh.classList.remove("off"); });
-  document.getElementById("question").textContent=t().bonus;
-  hintForPhase(); updateCount();
-  window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});
-}
-function exitExplore(){
+function next(){
   if(busy) return;
-  phase="result"; document.body.dataset.state="result";
-  document.getElementById("done").hidden=true;
-  render();
-  var panel=document.getElementById("panel"); panel.hidden=false;
-  try{ panel.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"}); }catch(e){}
+  if(streak>=3){ lessonComplete(); return; }
+  $("panel").hidden=true; nextVariant(); window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});
 }
+function lessonComplete(){
+  store.mastered[lesson.id]=true; save();
+  phase=""; document.body.dataset.state="";
+  renderFinish(); show("finish");
+}
+function renderFinish(){
+  header();
+  var root=$("finish"); root.innerHTML="";
+  var ct=t().ch[lesson.ch], lt=t().L[lesson.id];
+  var lastOfChapter = !LESSONS[LI+1] || LESSONS[LI+1].ch!==lesson.ch;
+  var c=h("div","card");
+  c.appendChild(h("p","big","⭐"));
+  c.appendChild(h("h2",null,t().mastered));
+  c.appendChild(h("p","sub",lesson.id+"  "+lt.t));
+  c.appendChild(h("div","rulebox",ct.e+"  "+ct.rule));
+  if(lastOfChapter){
+    c.appendChild(h("h2",null,t().chapterDone));
+    var tb=h("div","talkbox"); tb.appendChild(h("b",null,"💬 "+t().talk+": ")); tb.appendChild(document.createTextNode(ct.talk)); c.appendChild(tb);
+  }
+  if(LESSONS[LI+1]){
+    var nb=h("button","btn",t().nextLesson); nb.type="button"; nb.id="nextLesson"; nb.addEventListener("click",function(){ startLesson(LI+1); }); c.appendChild(nb);
+  } else c.appendChild(h("p","text",t().allDone));
+  var hb=h("button","btn ghost",t().home); hb.type="button"; hb.addEventListener("click",goHome); c.appendChild(hb);
+  root.appendChild(c);
+}
+
+/* ---------- bonus: bright spots ---------- */
+var found=[];
 function judge(S){
-  var dB=dist(SC.ball,S);
-  if(dB<MIN_FROM_KEEPER) return {k:"crowded"};
-  var blk=blockerFor(SC.ball,S);
-  if(blk) return {k:"shadow", blk:blk, i:SC.opps.indexOf(blk.opp)};
-  var near=null;
-  SC.opps.forEach(function(o,i){ var d=dist(o,S); if(d<MARK_DIST && (!near||d<near.d)) near={o:o,i:i,d:d}; });
+  var st=initState(inst); st.m.p=[-999,-999];
+  var b=inst.ball0, dB=dist(b,S);
+  if(dB<MIN_FROM_BALL) return {k:"crowded"};
+  var blk=blockerOn(st,b,S,allRefs(st,"them"));
+  if(blk) return {k:"shadow", blk:blk};
+  var near=null; st.them.forEach(function(e,i){ var d=dist(e.p,S); if(d<MARK_DIST&&(!near||d<near.d)) near={p:e.p,d:d}; });
   if(near) return {k:"marked", near:near};
   if(dB>MAX_PASS) return {k:"far"};
   return {k:"ok"};
 }
-function svgPoint(e){
-  var m=svg.getScreenCTM(); if(!m) return null;
-  var pt=svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY;
-  var q=pt.matrixTransform(m.inverse()); return [q.x,q.y];
+function enterExplore(){
+  phase="explore"; document.body.dataset.state="explore";
+  $("panel").hidden=true; $("done").hidden=false;
+  renderPlay();
+  window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});
 }
+function drawExplore(){
+  svg.classList.add("instant");
+  nodes.zones.style.display="none"; if(nodes.zbadges) nodes.zbadges.style.display="none";
+  drawOverlays(lesson.ok);
+  while(nodes.over.firstChild) nodes.over.removeChild(nodes.over.firstChild);
+  revealOn();
+  var mp = found.length ? found[found.length-1] : inst.options[lesson.ok].at;
+  setPos("m", mp); setBall(inst.ball0);
+  found.forEach(function(p){ el("circle",{cx:p[0],cy:p[1],r:5.5,fill:"#FFE45C",stroke:"#15301F","stroke-width":2},nodes.found); });
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ svg.classList.remove("instant"); }); });
+}
+function exitExplore(){
+  if(busy) return;
+  phase="result"; document.body.dataset.state="result"; $("done").hidden=true;
+  renderPlay(); $("panel").hidden=false;
+  try{ $("panel").scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"}); }catch(_){}
+}
+function svgPoint(e){ var m=svg.getScreenCTM(); if(!m) return null; var pt=svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; var q=pt.matrixTransform(m.inverse()); return [q.x,q.y]; }
 async function trySpot(S){
   busy=true;
-  var j=judge(S), ok=j.k==="ok";
-  clear(nodes.tryline); clear(nodes.marks); setBall(SC.ball);
-  setHint("\u00A0");
-  var from=maxPos.slice();
-  await tween(Math.min(700,250+dist(from,S)*2.5),function(e){ setMax(lerp(from,S,e)); });
-  await wait(100);
+  var j=judge(S), ok=j.k==="ok", b=inst.ball0;
+  while(nodes.tryline.firstChild) nodes.tryline.removeChild(nodes.tryline.firstChild);
+  while(nodes.marks.firstChild) nodes.marks.removeChild(nodes.marks.firstChild);
+  setBall(b); setHint("\u00A0");
+  var from=pos.m.slice();
+  await tween(Math.min(700,250+dist(from,S)*2.5),function(k){ setPos("m",lerp(from,S,k)); });
+  await wait(80);
   var end=null;
-  if(j.k==="shadow"){ end=backOff(SC.ball,j.blk.point,R_BODY+4); nodes.shadow[j.i].classList.remove("off"); }
-  else if(j.k==="marked") end=backOff(SC.ball,j.near.o,R_BODY+4);
-  else if(j.k==="far") end=lerp(SC.ball,S,MAX_PASS/dist(SC.ball,S));
-  else if(ok) end=backOff(SC.ball,S,R_BODY+3);
-  if(end){
-    passLine(nodes.tryline,SC.ball,ok?end:backOff(SC.ball,S,R_BODY+3),ok);
-    var b0=SC.ball.slice();
-    await tween(650,function(e){ setBall(lerp(b0,end,e)); });
-  }
-  if(j.k==="shadow") el("circle",{cx:j.blk.opp[0],cy:j.blk.opp[1],r:17,fill:"none",stroke:"#FF4D3D","stroke-width":3.5},nodes.marks);
-  if(j.k==="marked") el("circle",{cx:j.near.o[0],cy:j.near.o[1],r:17,fill:"none",stroke:"#FF4D3D","stroke-width":3.5},nodes.marks);
-  if(ok){
-    found.push(S);
-    el("circle",{cx:S[0],cy:S[1],r:20,fill:"none",stroke:"#FFE45C","stroke-width":3.5},nodes.marks);
-    el("circle",{cx:S[0],cy:S[1],r:5.5,fill:"#FFE45C",stroke:"#15301F","stroke-width":2},nodes.found);
-  }
+  if(j.k==="shadow"){ end=backOff(b,j.blk.point,R_BODY+4); if(nodes.shadow[j.blk.ref]) nodes.shadow[j.blk.ref].classList.remove("off"); }
+  else if(j.k==="marked") end=backOff(b,j.near.p,R_BODY+4);
+  else if(j.k==="far") end=lerp(b,S,MAX_PASS/dist(b,S));
+  else if(ok) end=backOff(b,S,R_BODY+3);
+  if(end){ passLine(nodes.tryline,b,ok?end:backOff(b,S,R_BODY+3),ok); var b0=b.slice(); await tween(650,function(k){ setBall(lerp(b0,end,k)); }); }
+  if(j.k==="shadow") ringAt(ent(initState(inst),j.blk.ref).p,"bad");
+  if(j.k==="marked") ringAt(j.near.p,"bad");
+  if(ok){ found.push(S); ringAt(S,"good",20); el("circle",{cx:S[0],cy:S[1],r:5.5,fill:"#FFE45C",stroke:"#15301F","stroke-width":2},nodes.found); }
   setHint(t().ex[j.k], ok?"good":"bad"); updateCount();
   busy=false;
 }
 svg.addEventListener("click",function(e){
   if(phase!=="explore"||busy) return;
   var p=svgPoint(e); if(!p) return;
-  if(p[0]<14||p[0]>356||p[1]<18||p[1]>288) return;
+  if(p[0]<14||p[0]>356||p[1]<inst.y0+8||p[1]>inst.y0+288||p[1]>540) return;
   trySpot(p);
 });
 
-function reset(){
-  phase="ask"; choice=null; lastNewStar=false; document.body.dataset.state="ask";
-  found=[]; maxPos=SC.start.slice();
-  document.getElementById("panel").hidden=true;
-  document.getElementById("done").hidden=true;
-  render();
-  window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});
-}
-
+/* ---------- wiring ---------- */
 document.querySelectorAll(".lang button").forEach(function(b){
-  b.addEventListener("click",function(){ if(phase==="playing"||busy) return; store.lang=b.dataset.lang; save(); render(); });
+  b.addEventListener("click",function(){
+    if(busy||flashing) return; store.lang=b.dataset.lang; save();
+    if(screen==="home") renderHome(); else if(screen==="intro") renderIntro(); else if(screen==="finish") renderFinish(); else renderPlay();
+  });
 });
-document.getElementById("again").addEventListener("click", reset);
-document.getElementById("bonus").addEventListener("click", enterExplore);
-document.getElementById("done").addEventListener("click", exitExplore);
+$("brand").addEventListener("click",goHome);
+$("back").addEventListener("click",goHome);
+$("next").addEventListener("click",next);
+$("showme").addEventListener("click",showMe);
+$("bonus").addEventListener("click",enterExplore);
+$("done").addEventListener("click",exitExplore);
 
-render();
-if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ if(phase!=="playing") render(); });
+renderHome(); show("home");
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ if(screen==="home") renderHome(); else if(screen==="play" && !busy && !flashing) renderPlay(); });
 if("serviceWorker" in navigator && /github\.io$|^localhost$|^127\./.test(location.hostname)){
   window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
 }
-window.HU={SC:SC, blockerFor:blockerFor, judge:judge, store:store, get found(){return found;}, get phase(){return phase;}};
+window.HU={LESSONS:LESSONS, store:store, simulate:simulate, instantiate:instantiate,
+  get phase(){return phase;}, get streak(){return streak;}, get inst(){return inst;}, get lesson(){return lesson;}, get letters(){return letters;}, get flashing(){return flashing;}, get busy(){return busy;},
+  startLesson:startLesson,
+  /* review hook: open one specific picture with fixed letters A,B,C in option order */
+  loadVariant:function(i,vi,mir){ LI=i; lesson=LESSONS[i]; streak=0; queue=[0,1,2]; qpos=0; show("play");
+    inst=instantiate(lesson,vi,!!mir); letters={}; lesson.opts.forEach(function(k,j){ letters[k]="ABC"[j]; });
+    choiceKey=null; showingKey=null; found=[]; phase="ask"; document.body.dataset.state="ask"; renderPlay(); if(inst.flash) runFlash(); }};
 })();
+
 </script>
 </body>
 </html>
